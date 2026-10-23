@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Front Range Fly Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: USGS-quad-style map sheet on the left, a field-notes panel on the right; month selector runs across the top like a hatch-chart header. */
+:root{
+  color-scheme:light;
+  --bg:#F3F5F0; --panel:#FFFFFF; --ink:#1B2621; --muted:#58675F; --line:#D3DAD1; --soft:#E8ECE5;
+  --plains:#F4F4EC; --mtn:#E1E7DA; --mtn-edge:#C9D2C1; --water:#2C6FAD; --lake:#BFD6E8; --road:#B4AC9C; --label:#46534C;
+  --accent:#1E5A48; --accent-ink:#FFFFFF; --pin-ring:#FFFFFF;
+  --good:#2E7D4F; --fair:#B7791F; --tough:#9A4A3A;
+  --c-poudre:#8455AD; --c-bigt:#BC5426; --c-rmnp:#2A8150; --c-stvrain:#B07D10; --c-boulder:#C93C72;
+  --c-sboulder:#16897C; --c-clear:#4D5BC2; --c-bear:#7E6444; --c-platte:#5E7F1E;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+:root.dark{
+  --bg:#0E1411; --panel:#151D19; --ink:#E2E9E4; --muted:#93A399; --line:#2A3530; --soft:#1C2621;
+  --plains:#121915; --mtn:#19231E; --mtn-edge:#26332C; --water:#5EA6E2; --lake:#24425A; --road:#4B4A42; --label:#A9B6AE;
+  --accent:#86C9AE; --accent-ink:#0E1411; --pin-ring:#0E1411;
+  --good:#5BBE84; --fair:#E0A649; --tough:#D9806E;
+  --c-poudre:#B28AD8; --c-bigt:#E98552; --c-rmnp:#5CC08A; --c-stvrain:#E0B040; --c-boulder:#EE6FA0;
+  --c-sboulder:#44C2B3; --c-clear:#8D98F0; --c-bear:#C2A37E; --c-platte:#9DC253;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1400px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:.01em}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* header */
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 24px}
+header h1{font-size:clamp(30px,4.2vw,46px);font-weight:700;text-transform:uppercase;line-height:.95}
+header h1 span{color:var(--accent)}
+.sub{color:var(--muted);max-width:62ch;margin-top:6px}
+.srcline{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.themebtn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:3px 12px;background:var(--panel);cursor:pointer}
+.themebtn:hover{background:var(--soft)}
+.srcline a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--panel)}
+
+/* month bar */
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.months{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel);flex:1 1 560px;min-width:0}
+.months button{appearance:none;border:0;border-right:1px solid var(--line);background:transparent;color:var(--ink);font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:9px 0 7px;cursor:pointer;position:relative;min-width:0}
+.months button:last-child{border-right:0}
+.months button:hover{background:var(--soft)}
+.months button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.months button .mnow{display:block;font-family:var(--f-mono);font-size:9px;letter-spacing:0;text-transform:none;opacity:.8;line-height:1}
+.toggle{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);cursor:pointer;user-select:none}
+.toggle input{accent-color:var(--accent);width:16px;height:16px}
+
+/* main grid */
+main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:16px;align-items:start}
+@media (max-width:900px){main{grid-template-columns:minmax(0,1fr)}}
+.mapcard{position:relative;background:var(--plains);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  height:min(1150px,max(760px,118vh))}
+@media (max-width:900px){.mapcard{height:min(80vh,165vw)}}
+@media (max-width:640px){.mapcard #map{height:min(76vh,150vw)}.months{grid-template-columns:repeat(6,minmax(0,1fr))}.months button:nth-child(6){border-right:0}.months button:nth-child(-n+6){border-bottom:1px solid var(--line)}.mapcard .maplegend{position:static;padding:10px;background:var(--panel);border-top:1px solid var(--line)}.mapcard{height:auto}#map{height:min(76vh,150vw)}}
+#map{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none}
+#map.dragging{cursor:grabbing}
+.zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px}
+.zoom button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:18px;font-weight:600;cursor:pointer;line-height:1}
+.zoom button:hover{background:var(--soft)}
+.maplegend{position:absolute;left:10px;bottom:10px;right:10px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none}
+.maplegend > *{pointer-events:auto}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;font-family:var(--f-body)}
+.chip .dot{width:10px;height:10px;border-radius:50%;flex:none}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.ratekey{display:inline-flex;gap:10px;align-items:center;font-size:12px;color:var(--muted);padding:4px 10px;border-radius:999px;background:var(--panel);border:1px solid var(--line)}
+.ratekey i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--muted);margin-right:4px;vertical-align:-1px}
+
+/* svg styles */
+.lbl-town{font-family:var(--f-body);font-size:12px;fill:var(--label);font-weight:600}
+.lbl-river{font-family:var(--f-body);font-style:italic;font-size:11.5px;fill:var(--water);font-weight:500}
+.lbl-road{font-family:var(--f-mono);font-size:9.5px;fill:var(--muted)}
+.lbl-region{font-family:var(--f-display);font-size:15px;letter-spacing:.35em;fill:var(--mtn-edge);font-weight:700}
+.lbl-peak{font-family:var(--f-mono);font-size:9.5px;fill:var(--label)}
+.lbl-cd{font-family:var(--f-mono);font-size:9.5px;fill:var(--muted);letter-spacing:.08em}
+.halo{paint-order:stroke;stroke:var(--plains);stroke-width:3.5px;stroke-linejoin:round}
+.pin{cursor:pointer}
+.pin circle.body{stroke:var(--pin-ring);stroke-width:2}
+.pin text{font-family:var(--f-display);font-weight:700;font-size:11.5px;fill:#fff;pointer-events:none}
+:root.dark .pin text{fill:#0E1411}
+.pin.fair{opacity:.72}
+.pin.tough{opacity:.32}
+.pin.dim{opacity:.12}
+.pin.ref.selected rect{stroke:var(--ink)}
+.pin .sel{fill:none;stroke:var(--ink);stroke-width:2;opacity:0}
+.pin.selected .sel{opacity:1}
+.pin:hover circle.body,.pin:focus circle.body{stroke:var(--ink)}
+.pin:focus{outline:none}
+
+/* panel */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+@media (min-width:901px){.panel{position:sticky;top:max(12px,env(safe-area-inset-top,0px));max-height:calc(100vh - 24px);overflow:auto}}
+.eyebrow{font-family:var(--f-display);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.panel h2{font-size:27px;font-weight:700;line-height:1.05}
+.panel h3{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.sect{display:flex;flex-direction:column;gap:8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;color:var(--muted);font-size:13.5px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.03em;padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.badge.rma{border-color:color-mix(in srgb,var(--c-bigt) 60%,var(--line));color:var(--c-bigt)}
+.badge.fra{border-color:color-mix(in srgb,var(--c-clear) 60%,var(--line));color:var(--c-clear)}
+.badge.gen{border-style:dashed}
+.verdict{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:10px;background:var(--soft)}
+.verdict .lvl{font-family:var(--f-display);font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.05em;line-height:1}
+.verdict .lvl.good{color:var(--good)} .verdict .lvl.fair{color:var(--fair)} .verdict .lvl.tough{color:var(--tough)}
+.verdict p{margin:0;font-size:14px}
+.notes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.notes li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:baseline;font-size:14px}
+.now{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.now .gauge{font-family:var(--f-mono);font-size:12.5px;line-height:1.45}
+.hatches{display:flex;flex-wrap:wrap;gap:6px}
+.hchip{font-size:12.5px;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
+.hchip.rep{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.hchip.gen{border-style:dashed;color:var(--muted)}
+.flygroups{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.flygroup h4{margin:0 0 6px;font-family:var(--f-display);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.flies{display:flex;flex-wrap:wrap;gap:5px}
+.fly{display:inline-flex;align-items:baseline;gap:5px;font-size:13px;padding:3px 8px;border-radius:6px;background:var(--soft);border:1px solid transparent}
+.fly .sz{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.fly .s{font-family:var(--f-mono);font-size:9.5px;color:var(--muted)}
+.linkish{appearance:none;background:none;border:0;padding:0;color:var(--accent);font:inherit;font-size:13.5px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.back{align-self:flex-start}
+
+/* hatch chart */
+.hc{display:grid;grid-template-columns:minmax(84px,auto) repeat(12,minmax(0,1fr));gap:2px;font-size:11.5px;overflow-x:auto}
+.hc .mh{font-family:var(--f-mono);font-size:9.5px;color:var(--muted);text-align:center}
+.hc .mh.cur{color:var(--ink);font-weight:500}
+.hc .rl{color:var(--ink);padding-right:6px;white-space:nowrap}
+.hc .c{height:16px;border-radius:2px;background:var(--soft)}
+.hc .c.g{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--accent) 38%,transparent) 0 3px,transparent 3px 6px)}
+.hc .c.r{background:var(--accent)}
+.hc .c.cur{box-shadow:0 0 0 1.5px var(--ink)}
+.hclegend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.hclegend span{display:inline-flex;align-items:center;gap:5px}
+.hclegend i{display:inline-block;width:14px;height:10px;border-radius:2px}
+
+/* key list */
+.key{display:flex;flex-direction:column;gap:14px}
+.kgroup h4{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-family:var(--f-display);font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.kgroup h4 .dot{width:11px;height:11px;border-radius:50%}
+.klist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.klist button{appearance:none;width:100%;display:grid;grid-template-columns:26px minmax(0,1fr) auto auto;gap:8px;align-items:center;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:7px 2px;color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.klist button:hover{background:var(--soft)}
+.klist .num{font-family:var(--f-display);font-weight:700;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;color:#fff}
+:root.dark .klist .num{color:#0E1411}
+.klist .dr{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.rdot{width:9px;height:9px;border-radius:50%}
+.rdot.good{background:var(--good)} .rdot.fair{background:var(--fair)} .rdot.tough{background:var(--tough)}
+.fine{font-size:12.5px;color:var(--muted)}
+.fine p{margin:0 0 6px}
+footer{font-size:12.5px;color:var(--muted);max-width:90ch}
+footer p{margin:0 0 6px}
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:12.5px;color:var(--ink);white-space:nowrap;transform:translate(-50%,-130%);box-shadow:0 2px 8px rgb(0 0 0 / .12)}
+
+/* Leaflet version */
+.mapcard{height:auto!important;background:var(--panel)}
+.mapcard #map{height:max(600px,calc(100vh - 250px));cursor:default;touch-action:auto}
+@media (max-width:900px){.mapcard #map{height:72vh}}
+.mapcard .maplegend{position:static;padding:10px;background:var(--panel);border-top:1px solid var(--line)}
+.leaflet-container{font-family:var(--f-body);background:var(--plains)}
+.leaflet-control-layers,.leaflet-bar a{background:var(--panel);color:var(--ink);border-color:var(--line)}
+.leaflet-control-layers{font-size:13px}
+.lpin span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;color:#fff;font:700 12.5px/1 var(--f-display);border:2px solid #fff;box-shadow:0 1px 4px rgb(0 0 0 / .45);transition:transform .15s}
+.lpin.fair span{opacity:.8}.lpin.tough span{opacity:.45}.lpin.dim span{opacity:.15}
+.lpin.selected span{transform:scale(1.25);box-shadow:0 0 0 3px #111,0 1px 6px rgb(0 0 0 / .5)}
+.lhome,.lref{white-space:nowrap}
+.lhome i{font-style:normal;color:#1E5A48;font-size:18px;line-height:16px;text-shadow:0 0 3px #fff,0 0 3px #fff}
+.lhome b,.lref b{position:absolute;left:18px;top:0;font:700 12px var(--f-body);color:#1B2621;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff}
+.lref i{display:block;width:12px;height:12px;margin:2px;transform:rotate(45deg);border:2px dashed #555;background:#fff}
+.lref b{font-style:italic;color:#444}
+:root.dark .lpin span{color:#0E1411;border-color:#0E1411}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Front Range <span>Fly Map</span></h1>
+      <p class="sub">26 spots within about an hour of Gunbarrel, keyed from the latest shop reports. Pick a month to see which spots are fishing and which flies to tie on.</p>
+      <p class="fine" id="updated" style="margin-top:4px" hidden></p>
+    </div>
+    <div class="srcline">
+      <a href="https://rockymtanglers.com/river-reports/" target="_blank" rel="noopener"><span class="badge rma">RMA</span>Rocky Mountain Anglers · <span id="d-RMA">Oct 7–9</span></a>
+      <a href="https://frontrangeanglers.com/pages/river-reports" target="_blank" rel="noopener"><span class="badge fra">FRA</span>Front Range Anglers · <span id="d-FRA">Oct 20</span></a>
+      <button type="button" class="themebtn" id="themebtn" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="themelbl">Dark mode</span></button>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="months" id="months" role="group" aria-label="Month"></div>
+    <label class="toggle" for="near"><input type="checkbox" id="near"> Only spots under 60 min</label>
+  </div>
+
+  <main>
+    <div class="mapcard" id="mapcard">
+      <div id="map" role="region" aria-label="Map of fishing spots north and west of Denver"></div>
+      <div class="maplegend" id="legend"></div>
+      
+    </div>
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </main>
+
+  <footer>
+    <p><b>How to read it.</b> Badges show where each line came from: <span class="badge rma">RMA</span> or <span class="badge fra">FRA</span> means the shop report said it, and <span class="badge gen">general</span> means standard Front Range timing filled the gap. The reports are weekly snapshots, so months other than the current one lean on general timing. Check the hatch chart's legend to see which is which.</p>
+    <p><b>Drive times</b> are estimates from Gunbarrel without traffic, not routed. Pins sit at the access point named in the report; open each one in Google Maps for directions. Basemaps: USGS The National Map (topo and satellite) and OpenTopoMap (terrain). Check CPW and National Park Service regulations before you fish.</p>
+    <p id="excluded"></p>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+// ===== DATA (compiled from shop reports, Oct 7–20, 2026) =====
+const SRC = {
+  RMA: { name: "Rocky Mountain Anglers", short: "RMA" },
+  FRA: { name: "Front Range Anglers", short: "FRA" }
+};
+
+// General Front Range hatch timing (months 1–12). Labeled "general" in the UI.
+const HATCH = {
+  midge:   { label: "Midges",        gen: [1,2,3,4,5,6,7,8,9,10,11,12] },
+  bwo:     { label: "BWO / Baetis",  gen: [3,4,5,9,10,11] },
+  caddis:  { label: "Caddis",        gen: [4,5,6,7,8,9] },
+  pmd:     { label: "PMD",           gen: [6,7,8] },
+  stone:   { label: "Stoneflies",    gen: [5,6,7,8] },
+  drake:   { label: "Drakes",        gen: [7,8] },
+  redquill:{ label: "Red Quill",     gen: [8,9,10] },
+  terr:    { label: "Terrestrials",  gen: [7,8,9,10] },
+  trico:   { label: "Tricos",        gen: [7,8,9,10] }
+};
+const SPRING=[3,4,5], SUMMER=[6,7,8], FALL=[9,10,11], WINTER=[12,1,2], ALL=[1,2,3,4,5,6,7,8,9,10,11,12];
+
+// f(name, size, type) type: d=dry n=nymph/subsurface s=streamer
+const f = (n, z, t) => ({ n, z: z || "", t });
+function list(t, arr){ return arr.map(x => Array.isArray(x) ? f(x[0], x[1], t) : f(x, "", t)); }
+
+const RIVERS = {
+  poudre: {
+    name: "Cache la Poudre", color: "--c-poudre",
+    reports: [{ src: "RMA", date: "Oct 8", iso: "2026-10-08", url: "https://rockymtanglers.com/cache-la-poudre-river/" }],
+    now: {
+      gauge: [{ src: "RMA", text: "38 CFS at the canyon mouth; start of “skinny water season.”" }],
+      picks: [
+        { src: "RMA", text: "Dry-dropper while it stays warm: a dark terrestrial #12–16 with a quill-bodied jig nymph #16–18 below." },
+        { src: "RMA", text: "If fish are on midges near the surface, switch to a Griffith’s Gnat or Mole Fly." },
+        { src: "RMA", text: "Around Fort Collins, swing a Slump Buster near structure." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "Fishes best late spring through early fall." },
+      { src: "RMA", text: "Upper-river summer hatches: caddis, stoneflies, PMDs. Attractor dries and dry-droppers work." },
+      { src: "RMA", text: "Lower sections near Fort Collins can produce in winter." }
+    ],
+    rs: { caddis: SUMMER, stone: SUMMER, pmd: SUMMER, terr: [10], midge: [10], bwo: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Blue-Winged Olive","18–20"],["Elk Hair Caddis","14–16"],["Parachute Adams","16–18"],["Stimulator","14"],["Chubby Chernobyl","10–12"],["Dark terrestrial (ant/beetle)","12–16"],["Griffith’s Gnat",""],["Mole Fly",""]]),
+        ...list("n", [["Pheasant Tail","16–18"],["Prince Nymph","12–18"],["Pat’s Rubber Legs","10–12"],["Zebra Midge","18–20"],["Hare’s Ear","14–16"],["San Juan Worm","10–12"],["CDC Baetis Emerger","18–20"],["Quill-bodied jig nymph","16–18"]]),
+        ...list("s", [["Thin Mint","6–10"],["Mini Gonga","6–8"],"Sparkle Minnow",["Sculpzilla","6–8"],"Rusty Trombone","Slump Buster"])
+      ]
+    }
+  },
+  bigt: {
+    name: "Big Thompson", color: "--c-bigt",
+    reports: [
+      { src: "RMA", date: "Oct 8", iso: "2026-10-08", url: "https://rockymtanglers.com/big-thompson-river/" },
+      { src: "FRA", date: "Oct 20", iso: "2026-10-20", url: "https://frontrangeanglers.com/pages/big-thompson-river" }
+    ],
+    now: {
+      gauge: [{ src: "FRA", text: "153 CFS (flows “really shot up”) · low 50s °F · light stain · guide rating 5/5" }],
+      picks: [
+        { src: "RMA", text: "Dries: small Parachute Adams, Extended Body BWO, black caddis #18–20, Griffith’s Gnat. Fish the sunnier stretches of the canyon." },
+        { src: "RMA", text: "Nymphs: Hare’s Ear or caddis larva on point, with an RS2, Black Beauty, Zebra Midge, or Blue Poison Tung dropper. Use less weight in sunny mid-depth pockets." },
+        { src: "FRA", text: "With the flow bump, fish have slid into calmer water behind boulders. Fish it like runoff." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "Winter: steady midge hatches." },
+      { src: "RMA", text: "Spring and summer: caddis, PMDs, BWOs, and stoneflies. Summer evenings are some of the best dry-fly fishing, in soft edges and slow pools." },
+      { src: "RMA", text: "Mid-October: midges, BWOs, small caddis, and lingering terrestrials before hard freezes." }
+    ],
+    rs: { midge: [...WINTER,10], caddis: [...SPRING,...SUMMER,10], pmd: [...SPRING,...SUMMER], bwo: [...SPRING,...SUMMER,10], stone: [...SPRING,...SUMMER], terr: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Micro Chubby","14–18"],["Hippie Stomper","14–16"],["Parachute Adams","12–20"],["Purple Haze","12–20"],["Humpy","14–16"],["X-Caddis","14–18"],["Corn Fed Caddis","14–18"],["Extended Body BWO","16–20"],["Griffith’s Gnat","18–24"],["Matt’s Midge","20–24"],["Sprout Midge","20–26"],["Mole Fly","18–24"]]),
+        ...list("n", [["Jig Get-It-Down Pats","12"],["Tung Stone","12–16"],["Little Black Sloan","14–18"],["Flashback Pheasant Tail","12–18"],["Psycho Prince","14–18"],["The Ticket","14–18"],["Tungsten Swing Caddis","14–16"],["Duracell","12–18"],["Spanish Bullet","14–18"],["Zebra Midge","18–24"],["Blue Poison Tung","18–22"],["Rainbow Warrior","18–22"],["Micro Mayfly","18–20"],["Ray Charles","14–18"],["Bubble Gum Scud","14–18"],["Manhattan Midge","18–24"],["Top Secret Midge","20–24"],["Biot Midge","18–20"],["Black Beauty","18–24"],["Tailwater Tiny","18–24"],["RS2","18–24"],["Bling Midge","18–24"],["UV Don King Midge","20–26"],"Leech","Worm","Egg"]),
+        ...list("s", ["Galloup’s Dungeon","Sparkle Minnow","Slump Buster","Sculpzilla","Geisha"])
+      ],
+      FRA: [
+        ...list("d", ["Chubby Chernobyl","Flying Ant","Rosen Para Beetle","Hi Viz Quill Midge","No See Um Hi Viz BWO","Center Stage Caddis","Ms Tickle Cripple BWO","Griffith’s Gnat","Compara Dun BWO","AR’s BWO Adult","AR’s BWO Emerger","All Season Caddis","Superman Caddis","Hot Mess Midge"]),
+        ...list("n", ["Juju Baetis","BTS Mayfly","RS-2","Puparazi","Zebra Midge","Tailwater Sow Bug","AR’s Spanish Bullet","Lil Bit","Tung Stud","Juggaret Chocolate Baetis","Tung Poudre Pupa","Hogan’s S&M Nymph"]),
+        ...list("s", ["Thin Mint"])
+      ]
+    }
+  },
+  rmnp: {
+    name: "Rocky Mountain NP", color: "--c-rmnp",
+    reports: [
+      { src: "RMA", date: "Oct 9", iso: "2026-10-09", url: "https://rockymtanglers.com/rmnp-2/" },
+      { src: "FRA", date: "Oct 20", iso: "2026-10-20", url: "https://frontrangeanglers.com/pages/rocky-mountain-national-park" }
+    ],
+    now: {
+      gauge: [{ src: "FRA", text: "9.34 CFS (gauge not named) · 49.3 °F · clear · guide rating 4/5" }],
+      picks: [
+        { src: "RMA", text: "Late-season favorites: Griffith’s Gnat and red or black Zebra Midges. Dry or dry-dropper still works on warmer days in the lower streams." },
+        { src: "RMA", text: "Fish sunlit water, roughly 11 AM to 4 PM. High lakes are shutting down above 9,000–10,000 ft." },
+        { src: "FRA", text: "Smaller flies are working better. Fish sit in the deepest water and spook easily. Watch for redds." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "Summer: the Big Thompson in the park fishes best during caddis, PMD, and terrestrial hatches." },
+      { src: "RMA", text: "October: high lakes shut down as freezes settle in; lower streams still fish on warm days." },
+      { src: "RMA", text: "Check park regulations and barbless-hook requirements before you go." }
+    ],
+    rs: { caddis: SUMMER, pmd: SUMMER, terr: [...SUMMER,10], midge: [10], bwo: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Deer Hair Ant","14–16"],["Super Beetle","16"],["Power Ant","14–18"],["Black Para Humpy","16–18"],["Elk Caddis","14–20"],["Red Quill","12–16"],["Purple Haze","14–18"],["Matt’s Midge","20–24"],["Griffith’s Gnat","18–24"],["Sprout Midge","20–26"]]),
+        ...list("n", [["Graphic Caddis","14–18"],["Little Black Sloan","14–18"],["Flashback Pheasant Tail","12–18"],["Perdigon","14–18"],["Hare’s Ear","12–16"],["Splitfoam PMD/BWO","18–20"],["Z-Wing Caddis","16–20"],["Tungsten Swing Caddis","14–16"],["Zebra Midge (red or black)","16–20"],["Medallion Midge","20–24"],["Blue Poison Tung","18–22"],["Rainbow Warrior","14–22"],"Black or Olive Leech","Worm"]),
+        ...list("s", ["Woolly Bugger","Hot Head Leech","Autumn Splendor","Hot Butt Slump"])
+      ],
+      FRA: [
+        ...list("d", ["Griffith’s Gnat","AR’s BWO","BWO Emerger","Mini Hippie Stomper","Big Boned Caddis","Micro Chubby","Hi Vis Beetle","Superman Caddis","Para Ant","Corn Fed Caddis","Ms Tickle Cripple BWO","Grumpy Frumpy","Chubby Chernobyl"]),
+        ...list("n", ["Zebra Midge","Simple PTN","Tungsten Phase 2","Tung Jig CDC Thrasher","BH Caddis Pupa","Jigged Egg","Glo Bug","AR’s Perdigon","RS-2","Lil Bit","Baltz Tung CDC Caddis","Juju Baetis","Rock Grinder","Frenchie","Jig TNT"])
+      ]
+    }
+  },
+  stvrain: {
+    name: "St. Vrain", color: "--c-stvrain",
+    reports: [
+      { src: "RMA", date: "Oct 9", iso: "2026-10-09", url: "https://rockymtanglers.com/st-vrain-2/" },
+      { src: "FRA", date: "Oct 20", iso: "2026-10-20", url: "https://frontrangeanglers.com/pages/st-vrain-creek" }
+    ],
+    now: {
+      gauge: [{ src: "FRA", text: "15.6 CFS, slowly dropping · upper 40s °F in Lyons · crystal clear · guide rating 4/5" }],
+      picks: [
+        { src: "RMA", text: "Rig: Parachute Adams #14–16 with a small Pheasant Tail or Zebra Midge #16–18 below." },
+        { src: "RMA", text: "Heavy BWO and midge hatches. Red quills linger some days, and small dark caddis may still be around." },
+        { src: "FRA", text: "Dry-droppers have been excellent. Fish hold in deeper water and are spooky." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "North St. Vrain: light rods and attractor dries for small water." },
+      { src: "RMA", text: "South St. Vrain: dry-dropper fishing is strong in summer and early fall." },
+      { src: "RMA", text: "Main stem in Lyons: fish concentrate in slower water during cooler months." },
+      { src: "FRA", text: "Midges are active year-round and are the safe bet in colder months." }
+    ],
+    rs: { midge: ALL, redquill: [10], bwo: [10], caddis: [10], terr: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Parachute Adams","14–20"],["Elk Hair Caddis","14–18"],["Corn Fed Caddis","14–18"],["Mayfly Dun","14–18"],["Mole Fly","16–20"],["Smoke Jumper","16–20"],["Film Critic","18–20"],["Sprout Midge","18–22"],["Chubby Chernobyl","14–18"],["Hamburger Grillos","14–16"],["Hippie Stomper","14–18"],["Ant Acid","14–18"]]),
+        ...list("n", [["CDC Pheasant Tail","14–18"],["Graphic Caddis","14–18"],["Z-Wing Caddis","14–18"],["Duracell","14–18"],["Spanish Bullet","14–18"],["Two-Bit Hooker","16–20"],["Rainbow Warrior","16–20"],["Zebra Midge","16–20"],["D Midge","16–20"],["Blue Poison Tung","16–20"],["Pal Midge","18–20"],"Leech","Small Worm"]),
+        ...list("s", ["Sculpzilla","Baby Gonga","Woolly Bugger","Thin Mint","Meat Whistle","Jigged Mini Leech"])
+      ],
+      FRA: [
+        ...list("d", ["Superman Caddis","Hi Vis Ant","Stimmie","Purple Haze","Foam Run Caddis","AR’s BWO Adult","AR’s BWO Emerger","Film Critic","Fin Fetcher Caddis","Dry Humper","Sparkle Dun BWO","Flying Ant","Rosen Para Beetle","Ms Tickle Cripple BWO","Chubby Chernobyl"]),
+        ...list("n", ["RS-2","Two-Bit Hooker","SOS Nymph","Juggaret FB Possum","Juju Baetis","Simple PTN","Arnott’s Pocket Drone","AR’s Perdigon","Kryptonite Caddis","Jigged Leech","Hot Butt Caddis","Puparazi","Tailwater Tiny"]),
+        ...list("s", ["Thin Mint"])
+      ]
+    }
+  },
+  boulder: {
+    name: "Boulder Creek", color: "--c-boulder",
+    reports: [
+      { src: "RMA", date: "Oct 8", iso: "2026-10-08", url: "https://rockymtanglers.com/boulder-creek/" },
+      { src: "FRA", date: "Oct 20", iso: "2026-10-20", url: "https://frontrangeanglers.com/pages/boulder-creek" }
+    ],
+    now: {
+      gauge: [{ src: "FRA", text: "11.3 CFS near Orodell · upper 40s °F · crystal clear · guide rating 4/5" }],
+      picks: [
+        { src: "RMA", text: "Skinny fall flows: small dries, dry-dropper, or a short nymph rig on light tippet. Target the steeper sections with structure, deep pools, and runs." },
+        { src: "RMA", text: "Bugs now: midges, small mayflies, lingering small terrestrials, dark caddis." },
+        { src: "FRA", text: "Start with a dry-dropper. Fish sit in the deepest water available and are spooky." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "Hatches run all year: midges, baetis, stoneflies, caddis, PMDs, red quills, and terrestrials." },
+      { src: "FRA", text: "Midges are active year-round and a safe bet in colder months. Caddis give strong evening fishing." }
+    ],
+    rs: { midge: ALL, bwo: [10], terr: [10], caddis: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Micro Chubby","14–18"],["409 Yeager","14–16"],["Hamburger Grillos","16"],["Hippie Stomper","14–16"],["Power Ant","16–18"],["Parachute Adams","12–20"],["Purple Haze","12–18"],["Elk Hair Caddis","12–18"],["Extended Body BWO","16–20"],["Griffith’s Gnat","14–20"],["Sprout Midge","18–22"]]),
+        ...list("n", [["Golden Tungstone","14–18"],["Frenchie","14–18"],["Spanish Bullet","14–18"],["Crostan’s","16–18"],["Electric Caddis","16–18"],["Hotwire Caddis","16–18"],["CDC Pheasant Tail","16–20"],["Rainbow Warrior","16–20"],["Blue Poison Tung","18–22"],["Juju PMD","16–18"],["Mercury Midge","18–20"],["Hare’s Ear","18–22"],["Copper John","16–20"],["RS2","18–22"],["Zebra Midge","18–22"],["Demon Midge","18–22"],["Pine Squirrel Leech","10–12"],["Squirmy Worm","12–16"]]),
+        ...list("s", ["Woolly Bugger","Autumn Splendor","Slump Buster","Micro Dungeon","Baby Gonga","Hot Butt Slump","Hot Head Tactical Zonker"])
+      ],
+      FRA: [
+        ...list("d", ["Hi Viz No See Um BWO","AR’s BWO Adult","AR’s BWO Emerger","Stimmie","Para Ant","Rosen Para Beetle","Superman Caddis","X Caddis","Ms Tickle Cripple BWO","All Season Caddis","Micro Chubby"]),
+        ...list("n", ["Zebra Midge","Juju Baetis","Arnott’s Pocket Drone","Spanish Perdigon","Black Beauty","Two-Bit Hooker","Kryptonite Caddis","BTS May BWO","ID Theft BWO","Tung Poudre Pupa","BH Caddis Pupa","Aero Baetis","Hot Butt Caddis","Remote Control","RS-2"])
+      ]
+    }
+  },
+  sboulder: {
+    name: "South Boulder Creek", color: "--c-sboulder",
+    reports: [
+      { src: "RMA", date: "Oct 9", iso: "2026-10-09", url: "https://rockymtanglers.com/south-boulder-creek/" },
+      { src: "FRA", date: "Oct 20", iso: "2026-10-20", url: "https://frontrangeanglers.com/pages/south-boulder-creek" }
+    ],
+    now: {
+      gauge: [
+        { src: "FRA", text: "66.3 CFS, holding level · upper 40s °F · near crystal clear · guide rating 4/5 (“excellent fishing”)" },
+        { src: "RMA", text: "On Oct 9, flows below Gross were at the minimum. Walker Ranch fishes well again around 20+ CFS, so the newer FRA reading suggests it has come back." }
+      ],
+      picks: [
+        { src: "RMA", text: "Small, dark patterns. Beetles and ants are the top surface producers." },
+        { src: "RMA", text: "Small caddis and BWO #16–18, dry or under a nymph rig. Above Gross, dry-droppers are producing west of the Peak to Peak." },
+        { src: "FRA", text: "Fish are spread out. Start in deeper water with a dry-dropper." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "Summer: caddis, PMDs, and green drakes bring fish up." },
+      { src: "RMA", text: "Spring and fall: midges, baetis, and stoneflies." },
+      { src: "RMA", text: "Lower creek fishes best in spring and early summer, before flows drop and water warms." }
+    ],
+    rs: { caddis: [...SUMMER,10], pmd: SUMMER, drake: SUMMER, midge: [...SPRING,...FALL], bwo: [...SPRING,...FALL], stone: [...SPRING,...FALL], terr: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Chubby Chernobyl","12–16"],["Wookie Hopper","12–16"],["Furimsky’s Foam Drake","12–14"],["Lucent Wing Drake","12–14"],["Sparkle Dun Gray Drake","14"],["Elk Hair Caddis","16–18"],["Better Foam Caddis","14–16"],["X Caddis","14–18"],["Pink Lady","16–20"],["On Point Para Wulff PMD","16–18"],["Extended Body BWO","16–20"],["Parachute Adams","10–18"],["Sprout Midge","18–22"],["Smoke Jumper","18–22"]]),
+        ...list("n", [["Girdle Bug","10–12"],["Jig Get-It-Down Pats","10–12"],["Iron Sally","12–16"],["Two Bit Drake","12–16"],["Trina’s Montana Prince","16"],["Tung Drop","14–16"],["Duracell","14–18"],["Two-Bit Hooker","14–18"],["Juan’s Splitback PMD","16–20"],["Rainbow Warrior","18–20"],["Blue Poison Tung","18–20"],["San Juan Worm","14–18"],["Squirmy Worm","14–18"],["Zebra Midge","18–20"],["RS2","18–22"],["Bling Midge","20–24"]]),
+        ...list("s", ["Woolly Bugger","Thin Mint","Sparkle Minnow","Barely Legal","Baby Gonga","Micro Dungeon"])
+      ],
+      FRA: [
+        ...list("d", ["Steve’s Sipper Dun BWO","Mole Fly","Superman Caddis","AR’s BWO Adult","AR’s BWO Emerger","Roza’s Red Butt Caddis","Grumpy Frumpy","Griffith’s Gnat","Film Critic","Big Boned Caddis","Dry Humper","All Season Caddis","CDC Caddis"]),
+        ...list("n", ["Good Speed Caddis","Juju Baetis","AR’s Perdigon","Tung Sassi’s Solution","BTS Mysis","RS-2","Crust Nymph","Sow Bug","Tung Poudre Pupa","Poison Tung","Juggaret Chocolate Baetis","Tailwater Tiny","Remote Control","BTS Mayfly","Lil Bit","Puparazi"])
+      ]
+    }
+  },
+  clear: {
+    name: "Clear Creek", color: "--c-clear",
+    reports: [
+      { src: "RMA", date: "Oct 9", iso: "2026-10-09", url: "https://rockymtanglers.com/clear-creek/" },
+      { src: "FRA", date: "Oct 20", iso: "2026-10-20", url: "https://frontrangeanglers.com/pages/clear-creek" }
+    ],
+    now: {
+      gauge: [{ src: "FRA", text: "52.3 CFS, slowly dropping · mid 50s °F · gin clear · guide rating 5/5" }],
+      picks: [
+        { src: "RMA", text: "Shop favorite on warm days: a small black beetle on top with a #18 Zebra Midge below." },
+        { src: "RMA", text: "Dry-droppers, short nymph rigs, and small streamers on cloudy days. Caddis pupa and larva patterns until overnight freezes." },
+        { src: "FRA", text: "A dry-dropper is often all you need. Bring a 4- or 5-weight and plenty of split shot." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "Spring and summer: caddis, PMDs, and stoneflies." },
+      { src: "RMA", text: "Fall: solid terrestrial fishing; caddis stay active until overnight freezes." },
+      { src: "RMA", text: "Winter: midges and slow presentations in the slower pools." }
+    ],
+    rs: { caddis: [...SPRING,...SUMMER,...FALL], pmd: [...SPRING,...SUMMER], stone: [...SPRING,...SUMMER], terr: FALL, midge: [...WINTER,10], bwo: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Micro Chubby","14–18"],["Super Beetle","12–16"],["Power Ant","14–16"],["Hippie Stomper","14–16"],["Deer Hair Ant","12–16"],["Better Foam Caddis","14–16"],["Humpy","16–18"],["Parachute Adams","16–20"],["Flink Hammer","14–18"],["Last Chance BWO","18–20"]]),
+        ...list("n", [["Girdle Bug","10–14"],["Prince Nymph","12–18"],["Duracell","14–16"],["CDC Pheasant Tail","16–20"],["The Ticket","12–16"],["Tung Swing Caddis","16–18"],["Flashback Pheasant Tail","14–18"],["Guide’s Choice Hare’s Ear","14–18"],["Frenchie","14–18"],["Copper John","16–20"],["Zebra Midge","16–20"],["Bling Midge","18–22"],["RS2","18–22"],["Pine Squirrel Leech","10–16"],["San Juan Worm","12–14"]]),
+        ...list("s", ["Woolly Bugger","Slump Buster","Pocket Dweller","Hot Butt Slump","Micro P Envy","Micro Dungeon"])
+      ],
+      FRA: [
+        ...list("d", ["Stimmie","Chubby Chernobyl","Superman Caddis","Dry Humper","Sparkle Dun BWO","Hi Viz Griffith’s Gnat","Ms Tickle Cripple BWO","Film Critic","AR’s BWO Adult","AR’s BWO Emerger","All Season Caddis"]),
+        ...list("n", ["Disco Midge","AR’s Perdigon","Arnott’s Pocket Drone","BH Caddis Pupa","Juju Baetis","Kryptonite Caddis","Spanish Bullet","Simple PTN","Hogan’s S&M Nymph","Tung Flashback PT","Black Beauty"])
+      ]
+    }
+  },
+  bear: {
+    name: "Bear Creek", color: "--c-bear",
+    reports: [{ src: "FRA", date: "Oct 20", iso: "2026-10-20", url: "https://frontrangeanglers.com/pages/bear-creek" }],
+    now: {
+      gauge: [{ src: "FRA", text: "14.4 CFS · mid 50s °F · light stain · guide rating 2/5" }],
+      picks: [
+        { src: "FRA", text: "Fishable but tough after a flash flood. Surviving fish are concentrated in deeper water and spooky, so approach carefully." },
+        { src: "FRA", text: "Expect small caddis, BWOs, midges, and terrestrials." }
+      ]
+    },
+    seasonNotes: [
+      { src: "FRA", text: "A good option April through June thanks to its mild runoff." }
+    ],
+    rs: { caddis: [10], bwo: [10], midge: [10], terr: [10] },
+    flies: {
+      FRA: [
+        ...list("d", ["Hippie Stomper","Parachute Adams","Superman Caddis","AR’s Adult BWO","Parachute BWO","Hi Vis Beetle"]),
+        ...list("n", ["BH Electric Rock Worm","Spanish Perdigon","Baltz Tung CDC Caddis","Zebra Midge","Two-Bit Hooker","RS-2"])
+      ]
+    }
+  },
+  platte: {
+    name: "South Platte", color: "--c-platte",
+    reports: [{ src: "RMA", date: "Oct 9", iso: "2026-10-09", url: "https://rockymtanglers.com/south-platte-river/" }],
+    now: {
+      gauge: [{ src: "RMA", text: "Sub-100 CFS at Cheesman, Deckers, and Eleven Mile. RMA gives no Waterton-specific reading." }],
+      picks: [
+        { src: "RMA", text: "River-wide: scuds, cranefly larvae, golden stones, caddis, and BWOs have all produced, depending on the day. Morning tricos may be coming off." },
+        { src: "RMA", text: "Trail a midge (Sprout, Matt’s, Griffith’s, Mole Fly) behind a sparkle dun, small Elk Hair Caddis, Adams, or Extended Body BWO." },
+        { src: "RMA", text: "On cloudy days, twitch and strip leeches near boulders." }
+      ]
+    },
+    seasonNotes: [
+      { src: "RMA", text: "Waterton Canyon is hike-in pocket water and long glides close to Denver, good for beginners and quick trips." },
+      { src: "RMA", text: "RMA’s South Platte fly list covers the whole river, mostly the canyons upstream. Treat it as a starting point for Waterton." }
+    ],
+    rs: { caddis: [10], bwo: [10], stone: [10], trico: [10], midge: [10] },
+    flies: {
+      RMA: [
+        ...list("d", [["Chubby Chernobyl","10–18"],["PMX","10–16"],["Elk Hair Caddis","16–20"],["X Caddis","16–18"],["Parachute Adams","10–22"],["Purple Haze","10–22"],["Sparkle Dun PMD","14–18"],["Extended Body PMD","14–16"],["Pink Lady","16–18"],["Extended Body BWO","16–20"],["GT Adams","18–20"],["Last Chance BWO","18–20"],["Tails Up Trico","18–22"],["Sprout Midge","18–22"],["Smoke Jumper","18–22"]]),
+        ...list("n", [["Girdle Bug","10–12"],["Rub-A-Dub Cranefly","8–12"],["The Ticket","12–16"],["Gasolina","14–16"],["BH Hare’s Ear","12–20"],["Psycho Prince","14–18"],["Two-Bit Hooker","14–18"],["Juan’s Splitback PMD","16–20"],["Rainbow Warrior","18–20"],["Blue Poison Tung","18–20"],["Zebra Midge","16–20"],["Top Secret Midge","18–22"],["Cheesman Emerger","18–22"],["RS2","18–22"],["Bling Midge","20–24"],["Scud Expecting","14–16"],["Ray Charles","14–20"],["San Juan Worm","14–18"],["Squirmy Worm","14–18"],["Balanced Leech","10–14"],["Mayer’s Mini Leech","16–18"],["Glo Bug","16"],["Yarn Egg","16"]]),
+        ...list("s", ["Woolly Bugger","Micro Dungeon","Thin Mint","Autumn Splendor","Baby Gonga","Goldie","Slump Buster"])
+      ]
+    }
+  }
+};
+
+// Spot water types drive the month rating (general timing unless a report says otherwise)
+// g = good months, f = fair months; everything else = tough
+const TYPES = {
+  tail:   { label: "Tailwater",          g: ALL, f: [] },
+  low:    { label: "Lower freestone",    g: [3,4,7,8,9,10,11], f: [12,1,2,5,6] },
+  high:   { label: "High-country stream", g: [7,8,9,10], f: [6,11] },
+  plains: { label: "Plains / in-town",   g: [3,4,5,6,9,10,11], f: [12,1,2,7,8] }
+};
+
+// d = est. drive minutes from Gunbarrel (no traffic)
+const SPOTS = [
+  { id:"poudre-fc", r:"poudre", name:"Poudre in Fort Collins", lat:40.5965, lon:-105.0745, d:50, type:"plains",
+    seasonSrc:"RMA", seasonOverride:{ g:[9,10,11,12,1,2,3,4], f:[7,8], why:"RMA: lower sections near Fort Collins can produce in winter." },
+    q:"Lee Martinez Park Fort Collins CO",
+    notes:[{src:"RMA",text:"Deeper pools and more complex structure. Nymph and streamer water."},{src:"RMA",text:"Swing a Slump Buster near structure."}] },
+  { id:"poudre-mouth", r:"poudre", name:"Poudre Canyon mouth", lat:40.6650, lon:-105.2240, d:55, type:"low",
+    q:"Cache la Poudre Canyon Mouth Highway 14 Bellvue CO",
+    notes:[{src:"RMA",asof:true,text:"Gauge here reads 38 CFS. Skinny water, and the bottom half of the canyon is cooling off."},{src:"RMA",text:"Easy roadside access along Highway 14."}] },
+  { id:"poudre-narrows", r:"poudre", name:"Narrows to Stove Prairie Landing", lat:40.6900, lon:-105.3650, d:70, type:"low", far:true,
+    q:"Stove Prairie Landing Cache la Poudre CO",
+    notes:[{src:"RMA",asof:true,text:"Fishing upstream from Stove Prairie Landing and the Narrows has been good."}] },
+
+  { id:"bigt-lower", r:"bigt", name:"Big T lower canyon", lat:40.4205, lon:-105.2335, d:45, type:"low",
+    q:"Viestenz-Smith Mountain Park Loveland CO",
+    notes:[{src:"RMA",text:"Drake to Loveland is about 10 more miles of fishable water where the canyon widens."},{src:"RMA",text:"Public access thins out closer to Loveland."}] },
+  { id:"bigt-drake", r:"bigt", name:"Big T at Drake", lat:40.4317, lon:-105.3390, d:55, type:"low",
+    q:"Drake CO 80515",
+    notes:[{src:"RMA",text:"Splits the two canyon reaches: about 10 miles of public water up to Lake Estes along Highway 34, 10 more down to Loveland."}] },
+  { id:"bigt-olympus", r:"bigt", name:"Big T below Olympus Dam", lat:40.3800, lon:-105.4740, d:55, type:"tail",
+    q:"Olympus Dam Estes Park CO",
+    notes:[{src:"RMA",text:"Clear pocket water in the upper canyon suits dry-dropper and small nymph rigs. Fish the sunnier stretches."},{src:"FRA",asof:true,text:"Upper canyon at 153 CFS. Fish moved behind boulders into calmer water."}] },
+  { id:"bigt-inlet", r:"bigt", name:"Lake Estes inlet", lat:40.3775, lon:-105.5140, d:55, type:"low",
+    q:"Lake Estes Estes Park CO",
+    notes:[{src:"RMA",text:"Twitch a small streamer for bigger fish moving out of the lake seasonally."},{src:"RMA",asof:true,text:"Water is “pretty skinny” near the inlet right now."}] },
+
+  { id:"rmnp-fall", r:"rmnp", name:"Fall River, Horseshoe Park", lat:40.4030, lon:-105.6245, d:65, type:"high", far:true,
+    q:"Horseshoe Park Rocky Mountain National Park",
+    notes:[{src:"RMA",text:"Small, intimate water with tight casting lanes and wary fish."},{src:"FRA",text:"Reached through the Fall River Entrance (Hwy 34). Excellent dry-fly fishing."}] },
+  { id:"rmnp-moraine", r:"rmnp", name:"Moraine Park", lat:40.3570, lon:-105.5990, d:65, type:"high", far:true,
+    q:"Moraine Park Rocky Mountain National Park",
+    notes:[{src:"FRA",text:"First public access on the Big Thompson. The river braids into channels; hunt browns along undercut banks."},{src:"RMA",text:"Meadow fishing for wild browns and brook trout."}] },
+
+  { id:"nsv-wild", r:"stvrain", name:"Wild Basin (North St. Vrain)", lat:40.2084, lon:-105.5663, d:55, type:"high",
+    q:"Wild Basin Trailhead Rocky Mountain National Park",
+    notes:[{src:"RMA",text:"Small, clear headwater streams with brookies, browns, and the odd cutthroat. Light rods and attractor dries."},{src:"FRA",text:"A Grand Slam (brown, brook, rainbow, greenback) is very obtainable here."}] },
+  { id:"nsv-button", r:"stvrain", name:"Buttonrock tailwater", lat:40.2207, lon:-105.3375, d:30, type:"tail",
+    q:"Button Rock Preserve Trailhead Lyons CO",
+    notes:[{src:"RMA",text:"Likely fishing like the Big T below Olympus Dam: smaller bugs and leeches on a deeper nymph rig."}] },
+  { id:"sv-lyons", r:"stvrain", name:"St. Vrain in Lyons", lat:40.2245, lon:-105.2695, d:20, type:"low",
+    q:"Meadow Park Lyons CO",
+    notes:[{src:"RMA",text:"Deeper pools, undercut banks, and riffles through town. In cooler months fish stack in slower water."},{src:"FRA",asof:true,text:"Fishing in the town of Lyons has been “fantastic.”"}] },
+  { id:"ssv-hwy7", r:"stvrain", name:"South St. Vrain, Hwy 7 canyon", lat:40.1850, lon:-105.3650, d:30, type:"low",
+    q:"South St Vrain Creek Highway 7 Lyons CO",
+    notes:[{src:"RMA",text:"Steep canyon with ample pull-offs: runs, riffles, and plunge pools. Browns dominate."},{src:"RMA",asof:true,text:"Lower N and S St. Vrain have picked up since September."}] },
+
+  { id:"bc-hessie", r:"boulder", name:"Hessie Trailhead (upper Boulder Cr)", lat:39.9544, lon:-105.6013, d:60, type:"high",
+    q:"Hessie Trailhead Nederland CO",
+    notes:[{src:"RMA",text:"Recommended upper water. Mostly brookies, with the occasional cutthroat."}] },
+  { id:"bc-barker", r:"boulder", name:"Barker Reservoir tailwater", lat:39.9640, lon:-105.4770, d:40, type:"tail",
+    seasonSrc:"RMA",
+    q:"Barker Dam Nederland CO",
+    notes:[{src:"RMA",text:"A small tailwater with prolific midge hatches and consistent flows year-round."}] },
+  { id:"bc-falls", r:"boulder", name:"Boulder Canyon, upper", lat:40.0010, lon:-105.3990, d:30, type:"low",
+    q:"Boulder Falls Boulder Canyon CO",
+    notes:[{src:"RMA",text:"Steep pocket water, plunge pools, and riffle-run sequences along Highway 119."},{src:"FRA",text:"The canyon is known for rainbows."}] },
+  { id:"bc-orodell", r:"boulder", name:"Boulder Canyon, lower (Orodell)", lat:40.0060, lon:-105.3270, d:20, type:"low",
+    q:"Orodell Boulder Canyon CO",
+    notes:[{src:"FRA",asof:true,text:"Flow gauge: 11.3 CFS. Fish hold in the deepest water and spook easily."}] },
+  { id:"bc-town", r:"boulder", name:"Boulder Creek in town", lat:40.0130, lon:-105.2830, d:15, type:"plains",
+    q:"Eben G Fine Park Boulder CO",
+    notes:[{src:"RMA",text:"The bike path follows the creek through town, past Foothills Parkway."},{src:"FRA",text:"Larger browns both in and just outside town."}] },
+
+  { id:"sbc-upper", r:"sboulder", name:"South Boulder Cr above Gross", lat:39.9120, lon:-105.5300, d:50, type:"high",
+    q:"Rollinsville CO",
+    notes:[{src:"RMA",asof:true,text:"Dry-droppers are producing west of the Peak to Peak Highway."},{src:"FRA",text:"Upper creek starts in the Indian Peaks near the Moffat Tunnel and flows toward Gross Reservoir."}] },
+  { id:"sbc-walker", r:"sboulder", name:"Walker Ranch (below Gross Dam)", lat:39.9510, lon:-105.3380, d:40, type:"tail",
+    seasonSrc:"FRA",
+    q:"Walker Ranch Trailhead Boulder CO",
+    notes:[{src:"RMA",text:"Technical tailwater: sight-fish to wary trout rising to small dries and emergers. Steep canyon, so plan a hike."},{src:"FRA",text:"Most popular section. Drive over Flagstaff Mountain to the dirt road. Browns over 18 in. are caught regularly."},{src:"RMA",text:"Flows depend on Denver Water releases. It fishes well at roughly 20+ CFS."}] },
+  { id:"sbc-eldo", r:"sboulder", name:"Eldorado Canyon State Park", lat:39.9310, lon:-105.2930, d:30, type:"low",
+    q:"Eldorado Canyon State Park CO",
+    notes:[{src:"FRA",text:"Plunge pools where the creek leaves the foothills."}] },
+  { id:"sbc-lower", r:"sboulder", name:"Lower S. Boulder Cr (Marshall–Valmont)", lat:39.9850, lon:-105.2220, d:20, type:"plains",
+    seasonSrc:"RMA", seasonOverride:{ g:[3,4,5,6], f:[9,10,11,12,1,2], why:"RMA: best in spring and early summer, before flows drop and water warms." },
+    q:"South Boulder Creek Trail Boulder CO",
+    notes:[{src:"RMA",text:"Open prairie water with boulder gardens and slick tailouts."}] },
+
+  { id:"cc-canyon", r:"clear", name:"Clear Creek Canyon (US-6)", lat:39.7470, lon:-105.3150, d:40, type:"low",
+    q:"Clear Creek Canyon Park Golden CO",
+    notes:[{src:"RMA",asof:true,text:"Fishing well: dry-droppers, short nymph rigs, and small streamers on cloudy days. Plenty of access, but steep banks and roadside parking."},{src:"FRA",asof:true,text:"Low 70s °F in the lower canyon. Fish are generally willing."}] },
+  { id:"cc-idaho", r:"clear", name:"Clear Creek at Idaho Springs", lat:39.7425, lon:-105.5135, d:55, type:"low",
+    q:"Idaho Springs CO exit 240",
+    notes:[{src:"FRA",text:"Take I-70 exit 240, turn left, then right on old Highway 6. Open to fishing most of its length. Swift water, so wade carefully."},{src:"RMA",asof:true,text:"The window on upper Clear Creek along I-70 is closing for the year."}] },
+
+  { id:"bear-canyon", r:"bear", name:"Bear Creek Canyon (Hwy 74)", lat:39.6560, lon:-105.2150, d:50, type:"low",
+    seasonSrc:"FRA", seasonOverride:{ g:[4,5,6,7,8,9,10], f:[3,11], why:"FRA: a good option April–June because runoff is mild." },
+    approx:true, q:"Bear Creek Canyon Park Morrison CO",
+    notes:[{src:"FRA",text:"FRA names no access points. The pin marks the canyon between Morrison and Idledale."},{src:"FRA",asof:true,text:"Tough after a recent flash flood (guide rating 2/5)."}] },
+
+  { id:"sp-waterton", r:"platte", name:"Waterton Canyon", lat:39.4915, lon:-105.0945, d:60, type:"tail",
+    q:"Waterton Canyon Trailhead Littleton CO",
+    notes:[{src:"RMA",text:"Hike-in fishery close to Denver: pocket water and long glides. Good for beginners and quick day trips."}] }
+];
+
+// Reference only, no current report data
+const REFS = [
+  { name:"Camp Dick", lat:40.1297, lon:-105.5197, d:50, note:"Middle St. Vrain. Neither shop covers it, and no credible current report turned up, so it has no fly data." }
+];
+
+const EXCLUDED = "Over ~70 min, so left off: Georgetown/Lake Georgetown, Glacier Creek & Sprague Lake, RMNP alpine lakes, the upper Poudre near Rustic, Deckers, Cheesman, Eleven Mile, Dream Stream, Blue, Colorado, Eagle, Arkansas.";
+
+// ---- Fly categorization (keyword rules) ----
+const CAT_RULES = [
+  ["streamer", /bugger|dungeon|gonga|sculpzilla|slump|sparkle minnow|thin mint|zonker|splendor|goldie|geisha|meat whistle|pocket dweller|envy|barely legal|rusty trombone/i],
+  ["leech", /leech/i],
+  ["wormegg", /worm|egg|glo bug/i],
+  ["scud", /scud|sow ?bug|ray charles|mysis/i],
+  ["crane", /cranefly/i],
+  ["drake", /drake/i],
+  ["redquill", /red quill/i],
+  ["trico", /trico/i],
+  ["pmd", /pmd|pink lady/i],
+  ["bwo", /bwo|baetis|blue-winged|rs-?2|last chance|micro mayfly|mayfly|bts may|poison tung|split ?foam|cdc baetis|film critic|adams|purple haze|quill-bodied|barr|juggaret chocolate/i],
+  ["caddis", /caddis|pupa|puparazi|sloan|rock worm|hotwire|z-wing|graphic/i],
+  ["stone", /stone|sally|girdle|rubber legs|pats|stimmie|stimulator|20 incher/i],
+  ["terr", /(^|[\s(])ants?\b|beetle|hopper|grillos|terrestrial/i],
+  ["midge", /midge|zebra|griffith|gnat|bling|black beauty|mole ?fly|top secret|sprout|smoke jumper|tailwater tiny|cheesman emerger|disco/i],
+  ["attractor", /chubby|stomper|humpy|pmx|yeager|flink|dry humper|grumpy|adams|purple haze|wulff|mayfly dun/i]
+];
+
+</script>
+<script>
+(function(){
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONL=["January","February","March","April","May","June","July","August","September","October","November","December"];
+let REPORT_MONTH=10;
+let month=new Date().getMonth()+1, selected=null, nearOnly=false, focusRiver=null;
+try{ const m=parseInt(localStorage.getItem("frfm-month")); if(m>=1&&m<=12) month=m; nearOnly=localStorage.getItem("frfm-near")==="1"; }catch(e){}
+
+const $=s=>document.querySelector(s);
+// Light is the default; dark is opt-in and remembered per browser.
+function applyTheme(dark){document.documentElement.classList.toggle("dark",dark);document.documentElement.style.colorScheme=dark?"dark":"light";const b=$("#themebtn");if(b){b.setAttribute("aria-pressed",dark);$("#themelbl").textContent=dark?"Light mode":"Dark mode"}}
+let dark=false;try{dark=localStorage.getItem("frfm-theme")==="dark"}catch(e){}
+applyTheme(dark);
+$("#themebtn").onclick=()=>{dark=!dark;applyTheme(dark);try{localStorage.setItem("frfm-theme",dark?"dark":"light")}catch(e){}};
+const svg=$("#map"), panel=$("#panel");
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cssv=n=>`var(${n})`;
+
+// ===MAP-A-END===
+// ---------- helpers: ratings, hatches, flies ----------
+function rate(s,m){
+  if(s.seasonOverride){const o=s.seasonOverride;const lvl=o.g.includes(m)?"good":o.f.includes(m)?"fair":"tough";return {lvl,src:s.seasonSrc,why:o.why}}
+  const t=TYPES[s.type]; const lvl=t.g.includes(m)?"good":t.f.includes(m)?"fair":"tough";
+  let why="";
+  if(s.type==="tail") why= s.seasonSrc==="RMA"?"RMA: consistent flows year-round.": s.seasonSrc==="FRA"?"FRA: tailwater with consistent summer flows. Dam releases set the water, so check the gauge.":"Dam-regulated flows fish year-round.";
+  else if(s.type==="low") why= lvl==="good"?"Freestone water in its prime window.": [5,6].includes(m)?"Runoff months: expect high, off-color water.":"Cold water. Fish midges slowly on warm afternoons.";
+  else if(s.type==="high") why= lvl==="good"?"High-country window: open access and active fish.": m===6?"Late runoff and lingering snow.": m===11?"Freezing up. Only warm afternoons fish.":"Ice, snow, and limited access.";
+  else why= lvl==="good"?"Lower water fishes well this time of year.": [7,8].includes(m)?"Low, warm water in midsummer. Go early.":"Cold. Slow midge fishing on mild days.";
+  const src=(s.seasonSrc && s.type==="tail")?s.seasonSrc:"gen";
+  return {lvl,src,why};
+}
+function riverHatches(rk){
+  const R=RIVERS[rk]; const keys=new Set(Object.keys(R.rs));
+  allFlies(rk).forEach(fl=>fl.cats.forEach(c=>{if(HATCH[c])keys.add(c)}));
+  return Object.keys(HATCH).filter(k=>keys.has(k));
+}
+function hatchState(rk,k,m){const R=RIVERS[rk];if(R.rs[k]&&R.rs[k].includes(m))return"r";if(HATCH[k].gen.includes(m))return"g";return""}
+const ATTRACTOR=[5,6,7,8,9,10];
+function cats(fl){const c=[];for(const [k,re] of CAT_RULES){if(re.test(fl.n))c.push(k)}if(fl.t==="s"&&!c.includes("streamer"))c.push("streamer");return c}
+const flyCache={};
+function allFlies(rk){
+  if(flyCache[rk])return flyCache[rk];
+  const map=new Map();
+  for(const src of ["RMA","FRA"]){const l=(RIVERS[rk].flies[src]||[]);for(const fl of l){
+    const key=fl.n.toLowerCase().replace(/[’'.\-\s]/g,"").replace(/s$/,"");
+    if(!map.has(key)){const c=cats(fl);map.set(key,{n:fl.n,z:fl.z,t:c.includes("streamer")?"s":fl.t,src:[src],cats:c})}
+    else{const e=map.get(key);if(!e.src.includes(src))e.src.push(src);if(!e.z&&fl.z)e.z=fl.z}
+  }}
+  return flyCache[rk]=[...map.values()];
+}
+const activeIn=(rk,k,m)=>!!hatchState(rk,k,m);
+function flyOn(rk,fl,m){
+  if(fl.t==="s")return true;
+  const c=fl.cats;
+  if(fl.t==="n"){
+    if(!c.length||c.some(x=>["stone","leech","wormegg","scud","crane","midge"].includes(x)))return true;
+    const nx=m%12+1;return c.some(x=>HATCH[x]&&(activeIn(rk,x,m)||activeIn(rk,x,nx)));
+  }
+  if((c.includes("attractor")||!c.length)&&ATTRACTOR.includes(m))return true;
+  return c.some(x=>HATCH[x]&&activeIn(rk,x,m));
+}
+const badge=src=>src==="RMA"?'<span class="badge rma">RMA</span>':src==="FRA"?'<span class="badge fra">FRA</span>':'<span class="badge gen">general</span>';
+const visible=s=>!(nearOnly&&s.d>60);
+
+// ---------- Leaflet map with real terrain tiles (GitHub version) ----------
+let LMAP; const markers={};
+const card=$("#mapcard");
+function pinIcon(s,i,lvl,sel){
+  const cls="lpin "+lvl+(sel?" selected":"")+(focusRiver&&s.r!==focusRiver?" dim":"");
+  return L.divIcon({className:cls,html:`<span style="background:var(${RIVERS[s.r].color})">${i+1}</span>`,iconSize:[26,26],iconAnchor:[13,13]});
+}
+function initMap(){
+  LMAP=L.map("map",{zoomSnap:.25,zoomDelta:.5,wheelPxPerZoomLevel:120});
+  const usgs='<a href="https://www.usgs.gov/programs/national-geospatial-program/national-map" target="_blank" rel="noopener">USGS The National Map</a>';
+  const topo=L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:usgs});
+  const sat=L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:usgs});
+  const terr=L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{subdomains:"abc",maxZoom:17,attribution:'Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors, SRTM | Style © <a href="https://opentopomap.org" target="_blank" rel="noopener">OpenTopoMap</a> (CC-BY-SA)'});
+  const layers={"Terrain":terr,"Topo":topo,"Satellite":sat};
+  let pick="Terrain";try{const v=localStorage.getItem("frfm-layer");if(layers[v])pick=v}catch(e){}
+  layers[pick].addTo(LMAP);
+  L.control.layers(layers,null,{position:"topright",collapsed:false}).addTo(LMAP);
+  LMAP.on("baselayerchange",e=>{try{localStorage.setItem("frfm-layer",e.name)}catch(_){}});
+  L.control.scale({imperial:true,metric:false}).addTo(LMAP);
+  L.marker([40.063,-105.172],{icon:L.divIcon({className:"lhome",html:"<i>★</i><b>Gunbarrel (home)</b>",iconSize:[16,16],iconAnchor:[8,8]}),interactive:false,keyboard:false}).addTo(LMAP);
+  REFS.forEach(rf=>{
+    const m=L.marker([rf.lat,rf.lon],{icon:L.divIcon({className:"lref",html:`<i></i><b>${esc(rf.name)}</b>`,iconSize:[16,16],iconAnchor:[8,8]}),title:rf.name+" (no current report)"}).addTo(LMAP);
+    m.on("click",()=>{selected="ref";updatePins();renderPanel(rf)});
+  });
+  SPOTS.forEach((s,i)=>{
+    const m=L.marker([s.lat,s.lon],{icon:pinIcon(s,i,"good",false),title:`${i+1}. ${s.name}`,riseOnHover:true,alt:`${i+1}. ${s.name}`}).addTo(LMAP);
+    m.bindTooltip(`<b>${i+1}.</b> ${esc(s.name)} · ~${s.d} min`,{direction:"top",offset:[0,-12]});
+    m.on("click",()=>select(s.id));
+    markers[s.id]=m;
+  });
+  resetView();
+  new ResizeObserver(()=>LMAP.invalidateSize()).observe($("#map"));
+}
+function updatePins(){
+  if(!LMAP)return;
+  SPOTS.forEach((s,i)=>{const m=markers[s.id];m.setIcon(pinIcon(s,i,rate(s,month).lvl,selected===s.id));
+    if(visible(s)){if(!LMAP.hasLayer(m))m.addTo(LMAP)}else m.remove();
+    m.setZIndexOffset(selected===s.id?1000:0)});
+}
+function fitSpots(list){if(list.length)LMAP.fitBounds(L.latLngBounds(list.map(s=>[s.lat,s.lon])).pad(.2),{maxZoom:12})}
+function resetView(){fitSpots(SPOTS.filter(visible))}
+function focusSpot(s){LMAP.setView([s.lat,s.lon],Math.max(LMAP.getZoom(),12))}
+// ===MAP-B-END===
+// ---------- live data (data/live.json, written by the weekly updater) ----------
+const NEWER={};
+const MONS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmtDate(iso){if(!iso)return"";const [y,m,d]=iso.split("-").map(Number);return `${MONS[m-1]} ${d}, ${y}`}
+function riverMonth(rk){const isos=RIVERS[rk].reports.map(r=>r.iso).filter(Boolean).sort();return isos.length?+isos[isos.length-1].split("-")[1]:REPORT_MONTH}
+function refreshDates(){
+  let all=[];for(const R of Object.values(RIVERS))all=all.concat(R.reports.map(r=>r.iso).filter(Boolean));all.sort();
+  if(all.length)REPORT_MONTH=+all[all.length-1].split("-")[1];
+  for(const src of ["RMA","FRA"]){const d=[];for(const R of Object.values(RIVERS))R.reports.filter(r=>r.src===src&&r.iso).forEach(r=>d.push(r.iso));d.sort();
+    const e=$("#d-"+src);if(e&&d.length){const a=d[0],b=d[d.length-1];e.textContent=a===b?fmtDate(a):`${fmtDate(a).replace(/, \d+$/,"")} – ${fmtDate(b)}`}}
+}
+function applyLive(L){
+  for(const [rk,lr] of Object.entries(L.rivers||{})){
+    const R=RIVERS[rk];if(!R)continue;
+    for(const rep of lr.reports||[]){
+      const st=R.reports.find(x=>x.src===rep.src);if(!st||!rep.iso)continue;
+      if(rep.iso>st.iso){NEWER[rk+":"+rep.src]=true;st.iso=rep.iso;st.date=fmtDate(rep.iso);
+        R.now.gauge=R.now.gauge.filter(g=>g.src!==rep.src)}
+      if(rep.iso>=st.iso){
+        const fl=(lr.flies||{})[rep.src];if(fl&&fl.length>=5)R.flies[rep.src]=fl;
+        const g=(lr.gauge||[]).filter(x=>x.src===rep.src);if(g.length)R.now.gauge=R.now.gauge.filter(x=>x.src!==rep.src).concat(g);
+      }
+    }
+    delete flyCache[rk];
+  }
+  if(L.updated){const u=$("#updated");u.textContent="Data last checked "+fmtDate(L.updated.slice(0,10))+". Refreshes automatically every morning at 6.";u.hidden=false}
+}
+function loadLive(){
+  refreshDates();
+  fetch("data/live.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(L=>{if(!L)return;applyLive(L);refreshDates();renderMonths();renderLegend();updatePins();renderPanel(selected==="ref"?REFS[0]:undefined)}).catch(()=>{});
+}
+// ---------- legend ----------
+function renderLegend(){
+  const lg=$("#legend");const used=[...new Set(SPOTS.map(s=>s.r))];
+  lg.innerHTML=used.map(rk=>`<button type="button" class="chip" data-r="${rk}" aria-pressed="${focusRiver===rk}"><span class="dot" style="background:var(${RIVERS[rk].color})"></span>${esc(RIVERS[rk].name)}</button>`).join("")+
+   `<span class="ratekey"><span><i style="opacity:1"></i>Good</span><span><i style="opacity:.6"></i>Fair</span><span><i style="opacity:.25"></i>Tough</span><span>in ${MON[month-1]}</span></span>`;
+  lg.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const rk=b.dataset.r;focusRiver=focusRiver===rk?null:rk;renderLegend();updatePins();
+    if(focusRiver)fitSpots(SPOTS.filter(s=>s.r===rk&&visible(s)));else resetView();
+    if(!selected||selected==="ref")renderPanel()});
+}
+
+// ---------- months ----------
+function renderMonths(){
+  $("#months").innerHTML=MON.map((m,i)=>`<button type="button" aria-pressed="${month===i+1}" data-m="${i+1}" title="${MONL[i]}">${m}${i+1===REPORT_MONTH?'<span class="mnow">reports</span>':""}</button>`).join("");
+  $("#months").querySelectorAll("button").forEach(b=>b.onclick=()=>{month=+b.dataset.m;try{localStorage.setItem("frfm-month",month)}catch(e){}renderMonths();renderLegend();updatePins();renderPanel(selected==="ref"?REFS[0]:undefined)});
+}
+$("#near").checked=nearOnly;
+$("#near").onchange=e=>{nearOnly=e.target.checked;try{localStorage.setItem("frfm-near",nearOnly?"1":"0")}catch(_){ }if(selected&&selected!=="ref"&&!visible(SPOTS.find(s=>s.id===selected)))selected=null;updatePins();renderPanel()};
+
+// ---------- panel ----------
+let showAllFlies=false;
+function select(id){selected=id;showAllFlies=false;updatePins();renderPanel();
+  if(window.matchMedia("(max-width:900px)").matches) panel.scrollIntoView({behavior:"smooth",block:"start"});}
+function renderPanel(ref){
+  if(ref){panel.innerHTML=`<button type="button" class="linkish back" id="back">← All spots</button>
+    <div class="sect"><div class="eyebrow">Reference marker · ~${ref.d} min</div><h2>${esc(ref.name)}</h2></div>
+    <div class="verdict"><div class="lvl" style="color:var(--muted)">No data</div><p>${esc(ref.note)}</p></div>
+    <p class="fine">The closest covered water is the South St. Vrain (pin ${SPOTS.findIndex(s=>s.id==="ssv-hwy7")+1}) and Wild Basin (pin ${SPOTS.findIndex(s=>s.id==="nsv-wild")+1}).</p>`;
+    $("#back").onclick=()=>{selected=null;updatePins();renderPanel()};return}
+  if(!selected){renderKey();return}
+  const s=SPOTS.find(z=>z.id===selected), R=RIVERS[s.r], i=SPOTS.indexOf(s), r=rate(s,month), mName=MONL[month-1];
+  const notes=s.notes.filter(n=>!(n.asof&&NEWER[s.r+":"+n.src]));
+  const srcs=[...new Set(s.notes.map(n=>n.src))];
+  const hk=riverHatches(s.r);
+  const act=hk.filter(k=>hatchState(s.r,k,month));
+  const flies=allFlies(s.r); const on=showAllFlies?flies:flies.filter(fl=>flyOn(s.r,fl,month));
+  const grp=t=>on.filter(fl=>fl.t===t);
+  const flyHtml=fl=>`<span class="fly">${esc(fl.n)}${fl.z?`<span class="sz">#${esc(fl.z)}</span>`:""}<span class="s">${fl.src.join("·")}</span></span>`;
+  const G=[["d","Dries"],["n","Nymphs & emergers"],["s","Streamers"]].map(([t,l])=>{const a=grp(t);return a.length?`<div class="flygroup"><h4>${l} <span class="fine">(${a.length})</span></h4><div class="flies">${a.map(flyHtml).join("")}</div></div>`:""}).join("");
+  const newerLinks=R.reports.filter(rp=>NEWER[s.r+":"+rp.src]).map(rp=>`<li>${badge(rp.src)}<span>${SRC[rp.src].name} posted a new report on ${fmtDate(rp.iso)}. <a href="${rp.url}" target="_blank" rel="noopener">Read it for their current tips ↗</a></span></li>`).join("");
+  const picks=R.now.picks.filter(p=>!NEWER[s.r+":"+p.src]);
+  const nowBlock= month===riverMonth(s.r)?`<div class="now"><div class="eyebrow">Right now · latest reports</div>
+     ${R.now.gauge.map(g=>`<div class="gauge">${badge(g.src)} ${esc(g.text)}</div>`).join("")}
+     <ul class="notes">${picks.map(p=>`<li>${badge(p.src)}<span>${esc(p.text)}</span></li>`).join("")}${newerLinks}</ul>
+     <div class="fine">${R.reports.map(rp=>`${rp.src} report ${fmtDate(rp.iso)}`).join(" · ")}</div></div>`:
+     `<div class="fine">The latest ${esc(R.name)} reports are from ${MONL[riverMonth(s.r)-1]}. ${mName} picks below come from each fly's hatch timing and the season notes.</div>`;
+  const chart=`<div class="hc" role="table" aria-label="${esc(R.name)} hatch chart">
+     <div></div>${MON.map((m,j)=>`<div class="mh${j+1===month?" cur":""}">${m[0]}</div>`).join("")}
+     ${hk.map(k=>`<div class="rl">${HATCH[k].label}</div>${MON.map((m,j)=>{const st=hatchState(s.r,k,j+1);return`<div class="c ${st}${j+1===month?" cur":""}" title="${HATCH[k].label}, ${MONL[j]}: ${st==="r"?"named in report":st==="g"?"general timing":"not expected"}"></div>`}).join("")}`).join("")}
+   </div>
+   <div class="hclegend"><span><i style="background:var(--accent)"></i>Named in a shop report</span><span><i style="background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--accent) 38%,transparent) 0 3px,transparent 3px 6px)"></i>General Front Range timing</span></div>`;
+  const gm=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.q)}`;
+  panel.innerHTML=`
+   <button type="button" class="linkish back" id="back">← All spots</button>
+   <div class="sect">
+     <div class="eyebrow" style="color:var(${R.color})">${i+1} · ${esc(R.name)}</div>
+     <h2>${esc(s.name)}</h2>
+     <div class="meta"><span class="mono">~${s.d} min from Gunbarrel${s.far?" (just over the hour)":""}</span><span>${TYPES[s.type].label}</span><span>${srcs.map(badge).join(" ")}</span></div>
+   </div>
+   <div class="verdict"><div class="lvl ${r.lvl}">${r.lvl}</div><p><b>${mName}.</b> ${esc(r.why)} ${badge(r.src)}</p></div>
+   <div class="sect"><h3>From the reports</h3><ul class="notes">${notes.map(n=>`<li>${badge(n.src)}<span>${esc(n.text)}</span></li>`).join("")}</ul></div>
+   ${nowBlock}
+   <div class="sect"><h3>Bugs in ${mName}</h3><div class="hatches">${act.length?act.map(k=>{const st=hatchState(s.r,k,month);return`<span class="hchip ${st==="r"?"rep":"gen"}" title="${st==="r"?"Named in a shop report":"General timing"}">${HATCH[k].label}</span>`}).join(""):'<span class="fine">Mostly midges and subsurface food.</span>'}</div></div>
+   <div class="sect"><h3>Flies to tie on</h3>
+     <div class="fine">${showAllFlies?`All ${flies.length} flies from the ${esc(R.name)} report${R.reports.length>1?"s":""}.`:`${on.length} of ${flies.length} report flies match ${mName}. Sizes come from RMA; FRA doesn't list sizes.`} <button type="button" class="linkish" id="allfl">${showAllFlies?"Show only "+MON[month-1]:"Show all"}</button></div>
+     <div class="flygroups">${G||'<div class="fine">No flies listed.</div>'}</div></div>
+   <div class="sect"><h3>${esc(R.name)} hatch chart</h3>${chart}</div>
+   <div class="sect"><h3>Season notes</h3><ul class="notes">${R.seasonNotes.map(n=>`<li>${badge(n.src)}<span>${esc(n.text)}</span></li>`).join("")}</ul></div>
+   <div class="sect" style="gap:6px"><a href="${gm}" target="_blank" rel="noopener">Open in Google Maps ↗</a>${R.reports.map(rp=>`<a href="${rp.url}" target="_blank" rel="noopener">${SRC[rp.src].name} report (${rp.date}) ↗</a>`).join("")}</div>
+  `;
+  $("#back").onclick=()=>{selected=null;updatePins();renderPanel()};
+  $("#allfl").onclick=()=>{showAllFlies=!showAllFlies;renderPanel()};
+}
+function renderKey(){
+  const groups=[...new Set(SPOTS.map(s=>s.r))].filter(rk=>!focusRiver||rk===focusRiver);
+  const cnt={good:0,fair:0,tough:0};SPOTS.filter(visible).forEach(s=>cnt[rate(s,month).lvl]++);
+  panel.innerHTML=`
+    <div class="sect"><div class="eyebrow">Spot key · ${MONL[month-1]}</div>
+    <h2>${cnt.good} good, ${cnt.fair} fair, ${cnt.tough} tough</h2>
+    <p class="fine" style="margin:0">Tap a pin or a row for flies, hatches, and current conditions.${month===REPORT_MONTH?" ${MONL[REPORT_MONTH-1]} shows the shops' latest readings.":""}</p></div>
+    <div class="key">${groups.map(rk=>{const R=RIVERS[rk];const ss=SPOTS.filter(s=>s.r===rk&&visible(s));if(!ss.length)return"";
+      return`<div class="kgroup"><h4><span class="dot" style="background:var(${R.color})"></span>${esc(R.name)} <span style="margin-left:auto;display:flex;gap:4px">${R.reports.map(rp=>badge(rp.src)).join("")}</span></h4><ul class="klist">${ss.map(s=>{const r=rate(s,month);const i=SPOTS.indexOf(s);
+        return`<li><button type="button" data-id="${s.id}"><span class="num" style="background:var(${R.color})">${i+1}</span><span>${esc(s.name)}</span><span class="dr">~${s.d}m</span><span class="rdot ${r.lvl}" title="${r.lvl} in ${MONL[month-1]}"></span></button></li>`}).join("")}</ul></div>`}).join("")}
+      ${focusRiver?"":`<div class="kgroup"><h4><span class="dot" style="border:1.5px dashed var(--muted)"></span>Reference</h4><ul class="klist"><li><button type="button" id="refbtn"><span class="num" style="background:transparent;color:var(--muted);border:1.5px dashed var(--muted)">◇</span><span>Camp Dick (no current report)</span><span class="dr">~50m</span><span></span></button></li></ul></div>`}
+    </div>`;
+  panel.querySelectorAll(".klist button[data-id]").forEach(b=>b.onclick=()=>{select(b.dataset.id);focusSpot(SPOTS.find(z=>z.id===b.dataset.id))});
+  const rb=$("#refbtn");if(rb)rb.onclick=()=>{selected="ref";renderPanel(REFS[0])};
+}
+$("#excluded").textContent=EXCLUDED;
+
+// ---------- boot ----------
+initMap();renderMonths();renderLegend();updatePins();renderPanel();
+loadLive();
+})();
+</script>
+
+</body>
+</html>
