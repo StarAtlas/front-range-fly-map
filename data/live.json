@@ -1,1 +1,780 @@
-{"updated":null,"rivers":{}}
+{
+ "updated": "2026-10-23T19:30Z",
+ "rivers": {
+  "poudre": {
+   "reports": [],
+   "flies": {},
+   "gauge": []
+  },
+  "bigt": {
+   "reports": [
+    {
+     "src": "FRA",
+     "iso": "2026-10-20",
+     "url": "https://frontrangeanglers.com/pages/big-thompson-river",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "FRA": [
+     {
+      "n": "Chubby Chernobyl",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Flying Ant",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Rosen Para Beetle",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Hi Viz Quill Midge",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "No See Um Hi Viz BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Center Stage Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Ms Tickle Cripple in BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Griffith’s Gnat",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Compara Dun BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’s BWO Adult",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’s BWO Emerger",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "All Season Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Superman Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Hot Mess Midge",
+      "z": "",
+      "t": "d"
+     }
+    ]
+   },
+   "gauge": [
+    {
+     "src": "FRA",
+     "text": "153 · low 50's · Light stain · guide rating 5/5"
+    }
+   ]
+  },
+  "rmnp": {
+   "reports": [
+    {
+     "src": "FRA",
+     "iso": "2026-10-20",
+     "url": "https://frontrangeanglers.com/pages/rocky-mountain-national-park",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "FRA": [
+     {
+      "n": "Griffith’s Gnat",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’s BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "BWO Emerger",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Mini Hippie Stomper",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Big Boned Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Micro Chubby",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Hi Vis Beetle",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Superman Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Para Ant",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Corn Fed Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Ms Tickle Cripple BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Grumpy Frumpy",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Chubby Chernobyl",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Simple PTN",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Tungsten Phase 2",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Tung Jig CDC Thrasher",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "BH Caddis Pupa",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Jigged Egg",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Glo Bug",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "AR’s Perdigon",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "RS-2",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Lil Bit",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Baltz Tung CDC Caddis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Juju Baetis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Rock Grinder",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Frenchie",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Jig TNT",
+      "z": "",
+      "t": "n"
+     }
+    ]
+   },
+   "gauge": [
+    {
+     "src": "FRA",
+     "text": "9.34 · 49.3 degrees · Clear · guide rating 4/5"
+    }
+   ]
+  },
+  "stvrain": {
+   "reports": [
+    {
+     "src": "FRA",
+     "iso": "2026-10-20",
+     "url": "https://frontrangeanglers.com/pages/st-vrain-creek",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "FRA": [
+     {
+      "n": "Super Man Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Hi Vis Ant",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Stimmie",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Purple Haze",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Foam Run Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’S BWO Adult",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’S BWO Emerger",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Film Critic",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Fin Fetcher Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Dry Humper",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Sparkle Dun BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Flying Ant",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Rosen Para Beetle",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Ms Tickle Cripple",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Chubby Chernobyl",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "RS-2",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Two Bit Hooker",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "SOS Nymph",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "RS-2",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Juggaret FB Possum",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Juju Baetis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Simple PTN",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Arnot’s Pocket Drone",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "AR’s Perdigon",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Two-Bit Hooker",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Kryptonite Caddis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Thin Mint",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Jigged Leech",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Hot Butt Caddis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Pupa Razi",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Tail Water Tiny",
+      "z": "",
+      "t": "n"
+     }
+    ]
+   },
+   "gauge": [
+    {
+     "src": "FRA",
+     "text": "15.60 CFS · Upper 40's (Lyons) · Crystal clear · guide rating 4/5"
+    }
+   ]
+  },
+  "boulder": {
+   "reports": [
+    {
+     "src": "FRA",
+     "iso": "2026-10-20",
+     "url": "https://frontrangeanglers.com/pages/boulder-creek",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "FRA": [
+     {
+      "n": "Hi Viz No See Um BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’s BWO Adult",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’s BWO Emerger",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Stimmie",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Para Ant",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Rosen Para Beetle",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Superman Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "X Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Ms Tickle Cripple in BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "All Season Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Micro Chubby",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "No See Um Hi Viz BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Juju Baetis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Arnott’s Pocket Drone",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Spanish Perdigon",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Black Beauty",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Two-Bit Hooker",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Kryptonite Caddis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "BTS May in BWO",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "ID Theft BWO",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Tung Poudre Pupae",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "BH Caddis Pupa",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Aero Baetis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Hot Butt Caddis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Remote Control",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "RS-2",
+      "z": "",
+      "t": "n"
+     }
+    ]
+   },
+   "gauge": [
+    {
+     "src": "FRA",
+     "text": "11.30 CFS - Near Orodell · Upper 40's · Crystal clear · guide rating 4/5"
+    }
+   ]
+  },
+  "sboulder": {
+   "reports": [
+    {
+     "src": "FRA",
+     "iso": "2026-10-20",
+     "url": "https://frontrangeanglers.com/pages/south-boulder-creek",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "FRA": [
+     {
+      "n": "Good Speed Caddis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Juju Baetis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "AR’s Perdigon",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Tung Sassi’s Solution",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "BTS Mysis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "RS-2",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Crust Nymph",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Sow Bug",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Tung Poudre Pupa",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Poison Tung",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Juggaret Chocolate Baetis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Tailwater Tiny",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Remote Control",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "BTS Mayfly",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Lil Bit",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Puparazi",
+      "z": "",
+      "t": "n"
+     }
+    ]
+   },
+   "gauge": [
+    {
+     "src": "FRA",
+     "text": "66.30 CFS · Upper 40's · Near crystal clear · guide rating 4/5"
+    }
+   ]
+  },
+  "clear": {
+   "reports": [],
+   "flies": {},
+   "gauge": []
+  },
+  "platte": {
+   "reports": [],
+   "flies": {},
+   "gauge": []
+  },
+  "bear": {
+   "reports": [
+    {
+     "src": "FRA",
+     "iso": "2026-10-20",
+     "url": "https://frontrangeanglers.com/pages/bear-creek",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "FRA": [
+     {
+      "n": "Hippie Stomper",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Parachute Adams",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Superman Caddis",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "AR’s Adult BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Parachute BWO",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "Hi Vis Beetle",
+      "z": "",
+      "t": "d"
+     },
+     {
+      "n": "BH Electric Rock Worm",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Spanish Perdigon",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Baltz Tung CDC Caddis",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Two-Bit Hooker",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "RS-2",
+      "z": "",
+      "t": "n"
+     }
+    ]
+   },
+   "gauge": [
+    {
+     "src": "FRA",
+     "text": "14.40 CFS · Mid 50's · Light stain · guide rating 2/5"
+    }
+   ]
+  }
+ }
+}
