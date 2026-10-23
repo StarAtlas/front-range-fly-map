@@ -220,7 +220,7 @@ footer p{margin:0 0 6px}
 
   <footer>
     <p><b>How to read it.</b> Badges show where each line came from: <span class="badge rma">RMA</span> or <span class="badge fra">FRA</span> means the shop report said it, and <span class="badge gen">general</span> means standard Front Range timing filled the gap. The reports are weekly snapshots, so months other than the current one lean on general timing. Check the hatch chart's legend to see which is which.</p>
-    <p><b>Drive times</b> are estimates from Gunbarrel without traffic, not routed. Pins sit at the access point named in the report; open each one in Google Maps for directions. Basemaps: USGS The National Map (topo and satellite) and OpenTopoMap (terrain). Check CPW and National Park Service regulations before you fish.</p>
+    <p><b>Drive times</b> are estimates from Gunbarrel without traffic, not routed. Pins sit at the access point named in the report; open each one in Google Maps for directions. Basemaps: USGS The National Map (topo and satellite). Check CPW and National Park Service regulations before you fish.</p>
     <p id="excluded"></p>
   </footer>
 </div>
@@ -718,7 +718,7 @@ function flyOn(rk,fl,m){
 const badge=src=>src==="RMA"?'<span class="badge rma">RMA</span>':src==="FRA"?'<span class="badge fra">FRA</span>':'<span class="badge gen">general</span>';
 const visible=s=>!(nearOnly&&s.d>60);
 
-// ---------- Leaflet map with real terrain tiles (GitHub version) ----------
+// ---------- Leaflet map with USGS topo and satellite tiles (GitHub version) ----------
 let LMAP; const markers={};
 const card=$("#mapcard");
 function pinIcon(s,i,lvl,sel){
@@ -730,9 +730,8 @@ function initMap(){
   const usgs='<a href="https://www.usgs.gov/programs/national-geospatial-program/national-map" target="_blank" rel="noopener">USGS The National Map</a>';
   const topo=L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:usgs});
   const sat=L.tileLayer("https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}",{maxZoom:16,attribution:usgs});
-  const terr=L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{subdomains:"abc",maxZoom:17,attribution:'Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors, SRTM | Style © <a href="https://opentopomap.org" target="_blank" rel="noopener">OpenTopoMap</a> (CC-BY-SA)'});
-  const layers={"Terrain":terr,"Topo":topo,"Satellite":sat};
-  let pick="Terrain";try{const v=localStorage.getItem("frfm-layer");if(layers[v])pick=v}catch(e){}
+  const layers={"Topo":topo,"Satellite":sat};
+  let pick="Topo";try{const v=localStorage.getItem("frfm-layer");if(layers[v])pick=v}catch(e){}
   layers[pick].addTo(LMAP);
   L.control.layers(layers,null,{position:"topright",collapsed:false}).addTo(LMAP);
   LMAP.on("baselayerchange",e=>{try{localStorage.setItem("frfm-layer",e.name)}catch(_){}});

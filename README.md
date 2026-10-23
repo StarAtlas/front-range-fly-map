@@ -5,7 +5,7 @@ An interactive map of 26 fly-fishing spots within about an hour of Gunbarrel, CO
 [Front Range Anglers](https://frontrangeanglers.com/pages/river-reports) river reports.
 
 Pick a month to see which spots should be fishing and which flies to tie on. The basemap opens on
-OpenTopoMap terrain (hillshaded); switch to USGS topo or USGS satellite from the map corner.
+the USGS topo map (shaded relief); switch to USGS satellite from the map corner.
 
 ## How it stays current
 
@@ -60,5 +60,4 @@ and links to the new report instead.
 | `scripts/update.py` | The updater (Python, `requests` + `beautifulsoup4`) |
 | `.github/workflows/update.yml` | The schedule that runs the updater and publishes the site |
 
-Basemaps: USGS The National Map (public domain) and OpenTopoMap (CC-BY-SA, © OpenStreetMap
-contributors). Check CPW and National Park Service regulations before you fish.
+Basemaps: USGS The National Map (public domain). Check CPW and National Park Service regulations before you fish.
