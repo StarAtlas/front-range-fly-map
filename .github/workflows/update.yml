@@ -1,0 +1,77 @@
+name: Update fishing reports
+
+on:
+  schedule:
+    # GitHub schedules run on UTC with no daylight saving. 6 am Denver is 12:00 UTC in summer
+    # (MDT) and 13:00 UTC in winter (MST), so both are scheduled and the first step skips
+    # whichever one doesn't match Denver's clock today.
+    - cron: "0 12 * * *"
+    - cron: "0 13 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Only run at 6 am Denver time
+        id: clock
+        run: |
+          # -0600 means Denver is on daylight time (6 am = 12:00 UTC); -0700 means standard time (13:00 UTC)
+          if [ "$(TZ=America/Denver date +%z)" = "-0600" ]; then want="0 12 * * *"; else want="0 13 * * *"; fi
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ github.event.schedule }}" != "$want" ]; then
+            echo "This slot isn't 6 am in Denver today. Skipping."
+            echo "go=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.clock.outputs.go == 'true'
+
+      - uses: actions/setup-python@v5
+        if: steps.clock.outputs.go == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        if: steps.clock.outputs.go == 'true'
+        run: pip install -r scripts/requirements.txt
+
+      - name: Refresh report data
+        if: steps.clock.outputs.go == 'true' && github.event_name != 'push'
+        run: python scripts/update.py
+
+      - name: Save the new data
+        if: steps.clock.outputs.go == 'true' && github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/live.json
+          git diff --cached --quiet || git commit -m "Update fishing reports"
+          git push
+
+      - uses: actions/configure-pages@v5
+        if: steps.clock.outputs.go == 'true'
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.clock.outputs.go == 'true'
+        with:
+          path: "."
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
+        if: steps.clock.outputs.go == 'true'
