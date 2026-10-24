@@ -1,16 +1,117 @@
 {
- "updated": "2026-10-23T19:30Z",
+ "updated": "2026-10-24T15:40Z",
  "rivers": {
   "poudre": {
-   "reports": [],
-   "flies": {},
+   "reports": [
+    {
+     "src": "RMA",
+     "iso": "2026-10-08",
+     "url": "https://rockymtanglers.com/river-reports/cache-la-poudre-river/",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "RMA": [
+     {
+      "n": "Blue-Winged Olive",
+      "z": "18–20",
+      "t": "d"
+     },
+     {
+      "n": "Elk Hair Caddis",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Parachute Adams",
+      "z": "16–18",
+      "t": "d"
+     },
+     {
+      "n": "Stimulator",
+      "z": "14",
+      "t": "d"
+     },
+     {
+      "n": "Chubby Chernobyl",
+      "z": "10–12",
+      "t": "d"
+     },
+     {
+      "n": "Pheasant Tail",
+      "z": "16–18",
+      "t": "n"
+     },
+     {
+      "n": "Prince Nymph",
+      "z": "12–18",
+      "t": "n"
+     },
+     {
+      "n": "Pat’s Rubber Legs",
+      "z": "10–12",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Hare’s Ear",
+      "z": "14–16",
+      "t": "n"
+     },
+     {
+      "n": "San Juan Worm",
+      "z": "10–12",
+      "t": "n"
+     },
+     {
+      "n": "CDC Baetis Emerger",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Thin Mint",
+      "z": "6–10",
+      "t": "s"
+     },
+     {
+      "n": "Mini Gonga",
+      "z": "6–8",
+      "t": "s"
+     },
+     {
+      "n": "Sparkle Minnows",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Sculpzilla",
+      "z": "6–8",
+      "t": "s"
+     },
+     {
+      "n": "Rusty Trombone",
+      "z": "",
+      "t": "s"
+     }
+    ]
+   },
    "gauge": []
   },
   "bigt": {
    "reports": [
     {
+     "src": "RMA",
+     "iso": "2026-10-08",
+     "url": "https://rockymtanglers.com/river-reports/big-thompson-river/",
+     "ok": true
+    },
+    {
      "src": "FRA",
-     "iso": "2026-10-20",
+     "iso": "2026-10-23",
      "url": "https://frontrangeanglers.com/pages/big-thompson-river",
      "ok": true
     }
@@ -87,20 +188,243 @@
       "z": "",
       "t": "d"
      }
+    ],
+    "RMA": [
+     {
+      "n": "Jig Get-it-Down Pats",
+      "z": "12",
+      "t": "n"
+     },
+     {
+      "n": "Tung Stone",
+      "z": "12–16",
+      "t": "n"
+     },
+     {
+      "n": "Little Black Sloan",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Flashback Pheasant Tail",
+      "z": "12–18",
+      "t": "n"
+     },
+     {
+      "n": "Psycho Prince",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "The Ticket",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Tungsten Swing Caddis",
+      "z": "14–16",
+      "t": "n"
+     },
+     {
+      "n": "Duracell",
+      "z": "12–18",
+      "t": "n"
+     },
+     {
+      "n": "Spanish Bullet",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "18–24",
+      "t": "n"
+     },
+     {
+      "n": "Blue Poison Tung",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Rainbow Warrior",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Micro Mayfly",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Ray Charles",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Bubble Gum Scud",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Manhattan Midge",
+      "z": "18–24",
+      "t": "n"
+     },
+     {
+      "n": "Top Secret Midge",
+      "z": "20–24",
+      "t": "n"
+     },
+     {
+      "n": "Biot Midge",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Black Beauty",
+      "z": "18–24",
+      "t": "n"
+     },
+     {
+      "n": "Tailwater Tiny",
+      "z": "18–24",
+      "t": "n"
+     },
+     {
+      "n": "RS2",
+      "z": "18–24",
+      "t": "n"
+     },
+     {
+      "n": "Bling Midge",
+      "z": "18–24",
+      "t": "n"
+     },
+     {
+      "n": "UV Don King Midge",
+      "z": "20–26",
+      "t": "n"
+     },
+     {
+      "n": "Leeches",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Worms",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Eggs",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Micro Chubby",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Hippie Stomper",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Parachute Adams",
+      "z": "12–20",
+      "t": "d"
+     },
+     {
+      "n": "Purple Haze",
+      "z": "12–20",
+      "t": "d"
+     },
+     {
+      "n": "Humpy",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "X-Caddis",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Corn Fed Caddis",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Extended Body BWO",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "Griffith’s Gnat",
+      "z": "18–24",
+      "t": "d"
+     },
+     {
+      "n": "Matt’s Midge",
+      "z": "20–24",
+      "t": "d"
+     },
+     {
+      "n": "Sprout Midge",
+      "z": "20–26",
+      "t": "d"
+     },
+     {
+      "n": "Mole Fly",
+      "z": "18–24",
+      "t": "d"
+     },
+     {
+      "n": "Galloup’s Dungeon",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Sparkle Minnow",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Slump Buster",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Sculpzilla",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Geisha",
+      "z": "",
+      "t": "s"
+     }
     ]
    },
    "gauge": [
     {
      "src": "FRA",
-     "text": "153 · low 50's · Light stain · guide rating 5/5"
+     "text": "148 · low 50's · Light stain · guide rating 5/5"
     }
    ]
   },
   "rmnp": {
    "reports": [
     {
+     "src": "RMA",
+     "iso": "2026-10-09",
+     "url": "https://rockymtanglers.com/river-reports/rmnp-2/",
+     "ok": true
+    },
+    {
      "src": "FRA",
-     "iso": "2026-10-20",
+     "iso": "2026-10-23",
      "url": "https://frontrangeanglers.com/pages/rocky-mountain-national-park",
      "ok": true
     }
@@ -247,20 +571,168 @@
       "z": "",
       "t": "n"
      }
+    ],
+    "RMA": [
+     {
+      "n": "Deer Hair Ant",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Super Beetle",
+      "z": "16",
+      "t": "d"
+     },
+     {
+      "n": "Power Ant",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Black Para Humpy",
+      "z": "16–18",
+      "t": "d"
+     },
+     {
+      "n": "Elk Caddis",
+      "z": "14–20",
+      "t": "d"
+     },
+     {
+      "n": "Red Quill",
+      "z": "12–16",
+      "t": "d"
+     },
+     {
+      "n": "Purple Haze",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Matt’s Midge",
+      "z": "20–24",
+      "t": "d"
+     },
+     {
+      "n": "Griffith’s Gnat",
+      "z": "18–24",
+      "t": "d"
+     },
+     {
+      "n": "Sprout Midge",
+      "z": "20–26",
+      "t": "d"
+     },
+     {
+      "n": "Graphic Caddis",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Little Black Sloan",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Flashback PT",
+      "z": "12–18",
+      "t": "n"
+     },
+     {
+      "n": "Perdigon",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Hare’s Ear",
+      "z": "12–16",
+      "t": "n"
+     },
+     {
+      "n": "Splitfoam PMD/BWO",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Z-Wing Caddis",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Tungsten Swing Caddis",
+      "z": "14–16",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midges",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Medallion Midge",
+      "z": "20–24",
+      "t": "n"
+     },
+     {
+      "n": "Blue Poison Tung",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Rainbow Warrior",
+      "z": "14–22",
+      "t": "n"
+     },
+     {
+      "n": "Black or Olive leeches",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Worms",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Buggers",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Hot Head Leech",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Autumn Splendor",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Hot Butt Slump",
+      "z": "",
+      "t": "s"
+     }
     ]
    },
    "gauge": [
     {
      "src": "FRA",
-     "text": "9.34 · 49.3 degrees · Clear · guide rating 4/5"
+     "text": "8.93 · 51.1 degrees · Clear · guide rating 4/5"
     }
    ]
   },
   "stvrain": {
    "reports": [
     {
+     "src": "RMA",
+     "iso": "2026-10-09",
+     "url": "https://rockymtanglers.com/river-reports/st-vrain-2/",
+     "ok": true
+    },
+    {
      "src": "FRA",
-     "iso": "2026-10-20",
+     "iso": "2026-10-23",
      "url": "https://frontrangeanglers.com/pages/st-vrain-creek",
      "ok": true
     }
@@ -422,20 +894,183 @@
       "z": "",
       "t": "n"
      }
+    ],
+    "RMA": [
+     {
+      "n": "Parachute Adams",
+      "z": "14–20",
+      "t": "d"
+     },
+     {
+      "n": "Elk Hair Caddis",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Cornfed Caddis",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Mayfly duns",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Mole Fly",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "Smoke Jumper",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "Film Critic",
+      "z": "18–20",
+      "t": "d"
+     },
+     {
+      "n": "Sprout Midge",
+      "z": "18–22",
+      "t": "d"
+     },
+     {
+      "n": "Chubby Chernobyl",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Hamburger Grillos",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Hippie Stomper",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Ant Acid",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "CDC Pheasant Tail",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Graphic Caddis",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Z-Wing Caddis",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Duracell",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Spanish Bullet",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Two-Bit Hooker",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Rainbow Warrior",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "D Midge",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Blue Poison Tung",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Pal Midge",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Leeches",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Small Worms",
+      "z": "",
+      "t": "n"
+     },
+     {
+      "n": "Sculpzilla",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Baby Gonga",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Buggers",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Thin Mints",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Meat Whistle",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Jigged Mini Leech",
+      "z": "",
+      "t": "s"
+     }
     ]
    },
    "gauge": [
     {
      "src": "FRA",
-     "text": "15.60 CFS · Upper 40's (Lyons) · Crystal clear · guide rating 4/5"
+     "text": "14.90 CFS · Mid 50's (Lyons) · Crystal clear · guide rating 4/5"
     }
    ]
   },
   "boulder": {
    "reports": [
     {
+     "src": "RMA",
+     "iso": "2026-10-08",
+     "url": "https://rockymtanglers.com/river-reports/boulder-creek/",
+     "ok": true
+    },
+    {
      "src": "FRA",
-     "iso": "2026-10-20",
+     "iso": "2026-10-23",
      "url": "https://frontrangeanglers.com/pages/boulder-creek",
      "ok": true
     }
@@ -577,20 +1212,213 @@
       "z": "",
       "t": "n"
      }
+    ],
+    "RMA": [
+     {
+      "n": "Micro Chubby",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "409 Yeager",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Hamburger Grillos",
+      "z": "16",
+      "t": "d"
+     },
+     {
+      "n": "Hippie Stomper",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Power Ant",
+      "z": "16–18",
+      "t": "d"
+     },
+     {
+      "n": "Para Adams",
+      "z": "12–20",
+      "t": "d"
+     },
+     {
+      "n": "Purple Haze",
+      "z": "12–18",
+      "t": "d"
+     },
+     {
+      "n": "Elk Hair Caddis",
+      "z": "12–18",
+      "t": "d"
+     },
+     {
+      "n": "Extended Body BWO",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "Griffith’s Gnat",
+      "z": "14–20",
+      "t": "d"
+     },
+     {
+      "n": "Sprout Midge",
+      "z": "18–22",
+      "t": "d"
+     },
+     {
+      "n": "Golden Tungstones",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Frenchie",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Spanish Bullet",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Crostan’s",
+      "z": "16–18",
+      "t": "n"
+     },
+     {
+      "n": "Electric Caddis",
+      "z": "16–18",
+      "t": "n"
+     },
+     {
+      "n": "Hotwire Caddis",
+      "z": "16–18",
+      "t": "n"
+     },
+     {
+      "n": "CDC Pheasant Tail",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Rainbow Warrior",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Blue Poison Tung",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Juju PMD",
+      "z": "16–18",
+      "t": "n"
+     },
+     {
+      "n": "Mercury Midge",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Hare’s Ear",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Frenchie",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Copper John",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "RS2",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Demon Midge",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Pine Squirrel Leech",
+      "z": "10–12",
+      "t": "n"
+     },
+     {
+      "n": "Squirmy Worm",
+      "z": "12–16",
+      "t": "n"
+     },
+     {
+      "n": "Woolly Buggers",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Autumn Splendor",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Slump Buster",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Micro Dungeon",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Baby Gonga",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Hot Butt Slump",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Hot Head Tactical Zonker",
+      "z": "",
+      "t": "s"
+     }
     ]
    },
    "gauge": [
     {
      "src": "FRA",
-     "text": "11.30 CFS - Near Orodell · Upper 40's · Crystal clear · guide rating 4/5"
+     "text": "16.0 CFS - Near Orodell · Upper 40's · Crystal clear · guide rating 4/5"
     }
    ]
   },
   "sboulder": {
    "reports": [
     {
+     "src": "RMA",
+     "iso": "2026-10-09",
+     "url": "https://rockymtanglers.com/river-reports/south-boulder-creek/",
+     "ok": true
+    },
+    {
      "src": "FRA",
-     "iso": "2026-10-20",
+     "iso": "2026-10-23",
      "url": "https://frontrangeanglers.com/pages/south-boulder-creek",
      "ok": true
     }
@@ -677,30 +1505,612 @@
       "z": "",
       "t": "n"
      }
+    ],
+    "RMA": [
+     {
+      "n": "Chubby Chernobyl",
+      "z": "12–16",
+      "t": "d"
+     },
+     {
+      "n": "Wookie Hopper",
+      "z": "12–16",
+      "t": "d"
+     },
+     {
+      "n": "Furimsky’s Foam Drake",
+      "z": "12–14",
+      "t": "d"
+     },
+     {
+      "n": "Lucent Wing Drake",
+      "z": "12–14",
+      "t": "d"
+     },
+     {
+      "n": "Sparkle Dun Gray Drake",
+      "z": "14",
+      "t": "d"
+     },
+     {
+      "n": "Elk Hair Caddis",
+      "z": "16–18",
+      "t": "d"
+     },
+     {
+      "n": "Better Foam Caddis",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "X Caddis",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Pink Lady",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "On Point Para Wulff PMD",
+      "z": "16–18",
+      "t": "d"
+     },
+     {
+      "n": "Extended Body BWO",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "Parachute Adams",
+      "z": "10–18",
+      "t": "d"
+     },
+     {
+      "n": "Sprout Midge",
+      "z": "18–22",
+      "t": "d"
+     },
+     {
+      "n": "Smoke Jumper",
+      "z": "18–22",
+      "t": "d"
+     },
+     {
+      "n": "Girdle Bug",
+      "z": "10–12",
+      "t": "n"
+     },
+     {
+      "n": "Jig Get-It-Down Pats",
+      "z": "10–12",
+      "t": "n"
+     },
+     {
+      "n": "Iron Sally",
+      "z": "12–16",
+      "t": "n"
+     },
+     {
+      "n": "Two Bit Drake",
+      "z": "12–16",
+      "t": "n"
+     },
+     {
+      "n": "Trina’s Montana Prince",
+      "z": "16",
+      "t": "n"
+     },
+     {
+      "n": "Tung Drop",
+      "z": "14–16",
+      "t": "n"
+     },
+     {
+      "n": "Duracell",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Two-Bit Hooker",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Juan’s Splitback PMD",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Rainbow Warrior",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Blue Poison Tung",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "San Juan Worm",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Squirmy Worm",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "RS-2",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Bling Midge",
+      "z": "20–24",
+      "t": "n"
+     },
+     {
+      "n": "Woolly Bugger",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Thin Mint",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Sparkle Minnow",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Barley Legal",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Baby Gonga",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Micro Dungeon",
+      "z": "",
+      "t": "s"
+     }
     ]
    },
    "gauge": [
     {
      "src": "FRA",
-     "text": "66.30 CFS · Upper 40's · Near crystal clear · guide rating 4/5"
+     "text": "68.10 CFS · Upper 40's · Near crystal clear · guide rating 4/5"
     }
    ]
   },
   "clear": {
-   "reports": [],
-   "flies": {},
+   "reports": [
+    {
+     "src": "RMA",
+     "iso": "2026-10-09",
+     "url": "https://rockymtanglers.com/river-reports/clear-creek/",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "RMA": [
+     {
+      "n": "Micro Chubby",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Super Beetle",
+      "z": "12–16",
+      "t": "d"
+     },
+     {
+      "n": "Power Ant",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Hippie Stomper",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Deer Hair Ant",
+      "z": "12–16",
+      "t": "d"
+     },
+     {
+      "n": "Better Foam Caddis",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Humpy",
+      "z": "16–18",
+      "t": "d"
+     },
+     {
+      "n": "Para Adams",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "Flink Hammer",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Last Chance BWO",
+      "z": "18–20",
+      "t": "d"
+     },
+     {
+      "n": "Girdle Bug",
+      "z": "10–14",
+      "t": "n"
+     },
+     {
+      "n": "Prince Nymph",
+      "z": "12–18",
+      "t": "n"
+     },
+     {
+      "n": "Duracell",
+      "z": "14–16",
+      "t": "n"
+     },
+     {
+      "n": "CDC Pheasant Tail",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "The Ticket",
+      "z": "12–16",
+      "t": "n"
+     },
+     {
+      "n": "Tung Swing Caddis",
+      "z": "16–18",
+      "t": "n"
+     },
+     {
+      "n": "Flashback Pheasant Tail",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Guide’s Choice Hare’s Ear",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Frenchie",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Copper John",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Bling Midge",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "RS2",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Pine Squirrel Leech",
+      "z": "10–16",
+      "t": "n"
+     },
+     {
+      "n": "San Juan Worm",
+      "z": "12–14",
+      "t": "n"
+     },
+     {
+      "n": "Buggers",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Slump Buster",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Pocket Dweller",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Hot Butt Slump",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Micro P Envy",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Micro Dungeon",
+      "z": "",
+      "t": "s"
+     }
+    ]
+   },
    "gauge": []
   },
   "platte": {
-   "reports": [],
-   "flies": {},
+   "reports": [
+    {
+     "src": "RMA",
+     "iso": "2026-10-09",
+     "url": "https://rockymtanglers.com/river-reports/south-platte-river/",
+     "ok": true
+    }
+   ],
+   "flies": {
+    "RMA": [
+     {
+      "n": "Chubby Chernobyl",
+      "z": "10–18",
+      "t": "d"
+     },
+     {
+      "n": "PMX",
+      "z": "10–16",
+      "t": "d"
+     },
+     {
+      "n": "Elk Hair Caddis",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "X Caddis",
+      "z": "116–18",
+      "t": "d"
+     },
+     {
+      "n": "Parachute Adams",
+      "z": "10–22",
+      "t": "d"
+     },
+     {
+      "n": "Purple Haze",
+      "z": "10–22",
+      "t": "d"
+     },
+     {
+      "n": "Sparkle Dun PMD",
+      "z": "14–18",
+      "t": "d"
+     },
+     {
+      "n": "Extended Body PMD",
+      "z": "14–16",
+      "t": "d"
+     },
+     {
+      "n": "Pink Lady",
+      "z": "16–18",
+      "t": "d"
+     },
+     {
+      "n": "Extended Body BWO",
+      "z": "16–20",
+      "t": "d"
+     },
+     {
+      "n": "GT Adams",
+      "z": "18–20",
+      "t": "d"
+     },
+     {
+      "n": "Last Chance BWO",
+      "z": "18–20",
+      "t": "d"
+     },
+     {
+      "n": "Tails Up Trico",
+      "z": "18–22",
+      "t": "d"
+     },
+     {
+      "n": "Sprout Midge",
+      "z": "18–22",
+      "t": "d"
+     },
+     {
+      "n": "Smoke Jumper",
+      "z": "18–22",
+      "t": "d"
+     },
+     {
+      "n": "Girdle Bug",
+      "z": "10–12",
+      "t": "n"
+     },
+     {
+      "n": "Rub-A-Dub Cranefly",
+      "z": "8–12",
+      "t": "n"
+     },
+     {
+      "n": "The Ticket",
+      "z": "12–16",
+      "t": "n"
+     },
+     {
+      "n": "Gasolina",
+      "z": "14–16",
+      "t": "n"
+     },
+     {
+      "n": "BH Hare’s Ear",
+      "z": "12–20",
+      "t": "n"
+     },
+     {
+      "n": "Psycho Prince",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Two-Bit Hooker",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Juan’s Splitback PMD",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Rainbow Warrior",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Blue Poison Tung",
+      "z": "18–20",
+      "t": "n"
+     },
+     {
+      "n": "Zebra Midge",
+      "z": "16–20",
+      "t": "n"
+     },
+     {
+      "n": "Top Secret",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Cheesman Emerger",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "RS-2",
+      "z": "18–22",
+      "t": "n"
+     },
+     {
+      "n": "Bling Midge",
+      "z": "20–24",
+      "t": "n"
+     },
+     {
+      "n": "Scud Expecting",
+      "z": "14–16",
+      "t": "n"
+     },
+     {
+      "n": "Ray Charles",
+      "z": "14–20",
+      "t": "n"
+     },
+     {
+      "n": "San Juan Worm",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Squirmy Worm",
+      "z": "14–18",
+      "t": "n"
+     },
+     {
+      "n": "Balanced Leech",
+      "z": "10–14",
+      "t": "n"
+     },
+     {
+      "n": "Mayer’s Mini Leech",
+      "z": "16–18",
+      "t": "n"
+     },
+     {
+      "n": "Glo Bug",
+      "z": "16",
+      "t": "n"
+     },
+     {
+      "n": "Yarn Egg",
+      "z": "16",
+      "t": "n"
+     },
+     {
+      "n": "Woolly Bugger",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Micro Dungeon",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Thin Mint",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Autumn Splendor",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Baby Gonga",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Goldie",
+      "z": "",
+      "t": "s"
+     },
+     {
+      "n": "Slump Buster",
+      "z": "",
+      "t": "s"
+     }
+    ]
+   },
    "gauge": []
   },
   "bear": {
    "reports": [
     {
      "src": "FRA",
-     "iso": "2026-10-20",
+     "iso": "2026-10-23",
      "url": "https://frontrangeanglers.com/pages/bear-creek",
      "ok": true
     }
@@ -772,7 +2182,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "14.40 CFS · Mid 50's · Light stain · guide rating 2/5"
+     "text": "11.30 CFS · Mid 50's · Light stain · guide rating 3/5"
     }
    ]
   }
