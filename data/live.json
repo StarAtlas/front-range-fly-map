@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T20:16Z",
+ "updated": "2026-11-05T20:28Z",
  "rivers": {
   "poudre": {
    "reports": [
@@ -111,7 +111,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-10-31",
+     "iso": "2026-11-04",
      "url": "https://frontrangeanglers.com/pages/big-thompson-river",
      "ok": true
     }
@@ -410,7 +410,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "29.20 · low 50's · Light stain · guide rating 5/5"
+     "text": "38.30 · low 50's · Light stain · guide rating 4/5"
     }
    ]
   },
@@ -424,7 +424,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-10-31",
+     "iso": "2026-11-04",
      "url": "https://frontrangeanglers.com/pages/rocky-mountain-national-park",
      "ok": true
     }
@@ -718,7 +718,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "7.02 · 44.2 degrees · Clear · guide rating 4/5"
+     "text": "7.75 · 41.2 degrees · Clear · guide rating 4/5"
     }
    ]
   },
@@ -732,7 +732,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-10-31",
+     "iso": "2026-11-04",
      "url": "https://frontrangeanglers.com/pages/st-vrain-creek",
      "ok": true
     }
@@ -1056,7 +1056,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "17.20 CFS · Mid 50's (Lyons) · Crystal clear · guide rating 4/5"
+     "text": "16.40 CFS · low 50's (Lyons) · Crystal clear · guide rating 4/5"
     }
    ]
   },
@@ -1070,7 +1070,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-10-31",
+     "iso": "2026-11-04",
      "url": "https://frontrangeanglers.com/pages/boulder-creek",
      "ok": true
     }
@@ -1404,7 +1404,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "12.40 CFS - Near Orodell · Upper 40's · Crystal clear · guide rating 4/5"
+     "text": "8.0 CFS - Near Orodell · Upper 40's · Crystal clear · guide rating 4/5"
     }
    ]
   },
@@ -1418,7 +1418,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-10-31",
+     "iso": "2026-11-04",
      "url": "https://frontrangeanglers.com/pages/south-boulder-creek",
      "ok": true
     }
@@ -1692,7 +1692,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "66.30 CFS · Upper 40's · Near crystal clear · guide rating 4/5"
+     "text": "89.40 CFS · Upper 40's · Near crystal clear · guide rating 4/5"
     }
    ]
   },
@@ -2110,7 +2110,7 @@
    "reports": [
     {
      "src": "FRA",
-     "iso": "2026-10-31",
+     "iso": "2026-11-04",
      "url": "https://frontrangeanglers.com/pages/bear-creek",
      "ok": true
     }
@@ -2182,7 +2182,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "10.70 CFS · Low 50's · Light stain · guide rating 3/5"
+     "text": "11.80 CFS · Low 50's · Light stain · guide rating 3/5"
     }
    ]
   }
