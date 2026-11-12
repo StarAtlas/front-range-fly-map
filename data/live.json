@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T19:59Z",
+ "updated": "2026-11-12T20:38Z",
  "rivers": {
   "poudre": {
    "reports": [
@@ -111,7 +111,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-11-04",
+     "iso": "2026-11-12",
      "url": "https://frontrangeanglers.com/pages/big-thompson-river",
      "ok": true
     }
@@ -169,22 +169,7 @@
       "t": "d"
      },
      {
-      "n": "AR’s BWO Emerger",
-      "z": "",
-      "t": "d"
-     },
-     {
-      "n": "All Season Caddis",
-      "z": "",
-      "t": "d"
-     },
-     {
-      "n": "Superman Caddis",
-      "z": "",
-      "t": "d"
-     },
-     {
-      "n": "Hot Mess Midge",
+      "n": "Emerger and a Hot Mess Midge",
       "z": "",
       "t": "d"
      }
@@ -410,7 +395,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "38.30 · low 50's · Light stain · guide rating 4/5"
+     "text": "24.30 · Upper 40's · Light stain · guide rating 4/5"
     }
    ]
   },
@@ -424,7 +409,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-11-04",
+     "iso": "2026-11-12",
      "url": "https://frontrangeanglers.com/pages/rocky-mountain-national-park",
      "ok": true
     }
@@ -467,17 +452,7 @@
       "t": "d"
      },
      {
-      "n": "Superman Caddis",
-      "z": "",
-      "t": "d"
-     },
-     {
       "n": "Para Ant",
-      "z": "",
-      "t": "d"
-     },
-     {
-      "n": "Corn Fed Caddis",
       "z": "",
       "t": "d"
      },
@@ -517,11 +492,6 @@
       "t": "n"
      },
      {
-      "n": "BH Caddis Pupa",
-      "z": "",
-      "t": "n"
-     },
-     {
       "n": "Jigged Egg",
       "z": "",
       "t": "n"
@@ -543,11 +513,6 @@
      },
      {
       "n": "Lil Bit",
-      "z": "",
-      "t": "n"
-     },
-     {
-      "n": "Baltz Tung CDC Caddis",
       "z": "",
       "t": "n"
      },
@@ -718,7 +683,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "7.75 · 41.2 degrees · Clear · guide rating 4/5"
+     "text": "6.68 · 41.0 degrees · Clear · guide rating 4/5"
     }
    ]
   },
@@ -732,18 +697,13 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-11-04",
+     "iso": "2026-11-12",
      "url": "https://frontrangeanglers.com/pages/st-vrain-creek",
      "ok": true
     }
    ],
    "flies": {
     "FRA": [
-     {
-      "n": "Super Man Caddis",
-      "z": "",
-      "t": "d"
-     },
      {
       "n": "Hi Vis Ant",
       "z": "",
@@ -760,11 +720,6 @@
       "t": "d"
      },
      {
-      "n": "Foam Run Caddis",
-      "z": "",
-      "t": "d"
-     },
-     {
       "n": "AR’S BWO Adult",
       "z": "",
       "t": "d"
@@ -776,11 +731,6 @@
      },
      {
       "n": "Film Critic",
-      "z": "",
-      "t": "d"
-     },
-     {
-      "n": "Fin Fetcher Caddis",
       "z": "",
       "t": "d"
      },
@@ -1056,7 +1006,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "16.40 CFS · low 50's (Lyons) · Crystal clear · guide rating 4/5"
+     "text": "18.0 CFS · Upper 40's (Lyons) · Crystal clear · guide rating 4/5"
     }
    ]
   },
@@ -1070,7 +1020,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-11-04",
+     "iso": "2026-11-12",
      "url": "https://frontrangeanglers.com/pages/boulder-creek",
      "ok": true
     }
@@ -1108,22 +1058,12 @@
       "t": "d"
      },
      {
-      "n": "Superman Caddis",
-      "z": "",
-      "t": "d"
-     },
-     {
-      "n": "X Caddis",
-      "z": "",
-      "t": "d"
-     },
-     {
       "n": "Ms Tickle Cripple in BWO",
       "z": "",
       "t": "d"
      },
      {
-      "n": "All Season Caddis",
+      "n": "Griffith’s Gnat",
       "z": "",
       "t": "d"
      },
@@ -1133,7 +1073,7 @@
       "t": "d"
      },
      {
-      "n": "No See Um Hi Viz BWO",
+      "n": "Hi Viz Quill Midge",
       "z": "",
       "t": "d"
      },
@@ -1184,11 +1124,6 @@
      },
      {
       "n": "Tung Poudre Pupae",
-      "z": "",
-      "t": "n"
-     },
-     {
-      "n": "BH Caddis Pupa",
       "z": "",
       "t": "n"
      },
@@ -1404,7 +1339,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "8.0 CFS - Near Orodell · Upper 40's · Crystal clear · guide rating 4/5"
+     "text": "9.44 CFS - Near Orodell · Low 40's · Crystal clear · guide rating 4/5"
     }
    ]
   },
@@ -1418,7 +1353,7 @@
     },
     {
      "src": "FRA",
-     "iso": "2026-11-04",
+     "iso": "2026-11-12",
      "url": "https://frontrangeanglers.com/pages/south-boulder-creek",
      "ok": true
     }
@@ -2110,7 +2045,7 @@
    "reports": [
     {
      "src": "FRA",
-     "iso": "2026-11-04",
+     "iso": "2026-11-12",
      "url": "https://frontrangeanglers.com/pages/bear-creek",
      "ok": true
     }
@@ -2128,12 +2063,12 @@
       "t": "d"
      },
      {
-      "n": "Superman Caddis",
+      "n": "Hi Viz BWO",
       "z": "",
       "t": "d"
      },
      {
-      "n": "AR’s Adult BWO",
+      "n": "Griffith’s Gnat AR’s Adult BWO",
       "z": "",
       "t": "d"
      },
@@ -2182,7 +2117,7 @@
    "gauge": [
     {
      "src": "FRA",
-     "text": "11.80 CFS · Low 50's · Light stain · guide rating 3/5"
+     "text": "10.70 CFS · Upper 40's · Light stain · guide rating 3/5"
     }
    ]
   }
