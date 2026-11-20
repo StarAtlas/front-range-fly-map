@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-19T21:10Z",
+ "updated": "2026-11-20T20:54Z",
  "rivers": {
   "poudre": {
    "reports": [
@@ -7,7 +7,7 @@
      "src": "RMA",
      "iso": "2026-11-13",
      "url": "https://rockymtanglers.com/river-reports/cache-la-poudre-river/",
-     "ok": false
+     "ok": true
     }
    ],
    "flies": {
@@ -107,7 +107,7 @@
      "src": "RMA",
      "iso": "2026-11-13",
      "url": "https://rockymtanglers.com/river-reports/big-thompson-river/",
-     "ok": false
+     "ok": true
     },
     {
      "src": "FRA",
@@ -405,7 +405,7 @@
      "src": "RMA",
      "iso": "2026-11-13",
      "url": "https://rockymtanglers.com/river-reports/rmnp-2/",
-     "ok": false
+     "ok": true
     },
     {
      "src": "FRA",
@@ -693,7 +693,7 @@
      "src": "RMA",
      "iso": "2026-11-13",
      "url": "https://rockymtanglers.com/river-reports/st-vrain-2/",
-     "ok": false
+     "ok": true
     },
     {
      "src": "FRA",
@@ -1016,7 +1016,7 @@
      "src": "RMA",
      "iso": "2026-11-12",
      "url": "https://rockymtanglers.com/river-reports/boulder-creek/",
-     "ok": false
+     "ok": true
     },
     {
      "src": "FRA",
@@ -1349,7 +1349,7 @@
      "src": "RMA",
      "iso": "2026-11-13",
      "url": "https://rockymtanglers.com/river-reports/south-boulder-creek/",
-     "ok": false
+     "ok": true
     },
     {
      "src": "FRA",
@@ -1637,7 +1637,7 @@
      "src": "RMA",
      "iso": "2026-11-13",
      "url": "https://rockymtanglers.com/river-reports/clear-creek/",
-     "ok": false
+     "ok": true
     }
    ],
    "flies": {
@@ -1807,7 +1807,7 @@
      "src": "RMA",
      "iso": "2026-11-14",
      "url": "https://rockymtanglers.com/river-reports/south-platte-river/",
-     "ok": false
+     "ok": true
     }
    ],
    "flies": {
