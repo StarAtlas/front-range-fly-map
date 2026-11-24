@@ -1,11 +1,11 @@
 {
- "updated": "2026-11-22T20:08Z",
+ "updated": "2026-11-24T00:34Z",
  "rivers": {
   "poudre": {
    "reports": [
     {
      "src": "RMA",
-     "iso": "2026-11-13",
+     "iso": "2026-11-23",
      "url": "https://rockymtanglers.com/river-reports/cache-la-poudre-river/",
      "ok": true
     }
@@ -1014,7 +1014,7 @@
    "reports": [
     {
      "src": "RMA",
-     "iso": "2026-11-12",
+     "iso": "2026-11-23",
      "url": "https://rockymtanglers.com/river-reports/boulder-creek/",
      "ok": true
     },
@@ -1347,7 +1347,7 @@
    "reports": [
     {
      "src": "RMA",
-     "iso": "2026-11-13",
+     "iso": "2026-11-23",
      "url": "https://rockymtanglers.com/river-reports/south-boulder-creek/",
      "ok": true
     },
